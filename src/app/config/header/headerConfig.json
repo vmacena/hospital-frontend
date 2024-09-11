@@ -6,8 +6,8 @@
         "label": "Serviços",
         "href": "#",
         "dropdownItems": [
-          { "label": "Agendar consulta", "href": "/services/consulting" },
-          { "label": "Resultados de exames", "href": "/services/development" }
+          { "label": "Agendar consulta", "href": "/patient/appointments" },
+          { "label": "Resultados de exames", "href": "/patient/results" }
         ]
       },
       { "label": "Sobre", "href": "/about" }
