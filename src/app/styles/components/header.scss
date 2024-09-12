@@ -86,23 +86,23 @@ li:hover .dropdown {
 @media (max-width: 768px) {
     header {
         flex-direction: column;
-        align-items: center; /* Center align items */
+        align-items: center; 
     }
 
     h1 {
-        margin-bottom: 10px; /* Add some space below the title */
+        margin-bottom: 10px; 
     }
 
     nav {
         width: 100%;
         flex-direction: column;
-        align-items: center; /* Center align navigation */
+        align-items: center; 
     }
 
     ul {
         flex-direction: column;
         width: 100%;
-        align-items: center; /* Center align list items */
+        align-items: center; 
     }
 
     li {
