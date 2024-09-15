@@ -4,25 +4,12 @@ import { useState } from 'react';
 import styles from './page.module.scss';
 import logoImg from '/public/logo.svg';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { useAdminAuth } from './auth/admin/useAdminAuth';
-
-function SignupButton() {
-  const router = useRouter();
-
-  const handleSignupClick = () => {
-    router.push('/pages/signup');
-  };
-
-  return (
-    <button onClick={handleSignupClick} className={styles.signupButton}>Cadastrar</button>
-  );
-}
+import SignupButton from './components/SignupButton';
+import LoginForm from './components/LoginForm';
+import AdminLoginForm from './components/AdminLoginForm';
 
 export default function Page() {
   const [activeForm, setActiveForm] = useState<string | null>(null);
-  const { adminCredential, setAdminCredential, handleAdminSubmit } = useAdminAuth();
-  const router = useRouter();
 
   const handleButtonClick = (formType: string) => {
     setActiveForm(formType);
@@ -46,16 +33,11 @@ export default function Page() {
             </>
           )}
           {activeForm === 'paciente' && (
-            <form>
-              <input 
-                type="text"
-                required
-                name="susNumber"
-                placeholder="Insira seu número SUS"
-                className={styles.input}
-              />
-              <button type="submit" className={styles.button}>Entrar</button>
-            </form>
+            <LoginForm 
+              formType="susNumber" 
+              placeholder="Insira seu número SUS" 
+              onSubmit={(e) => { e.preventDefault(); /* handle submit logic */ }} 
+            />
           )}
         </section>
 
@@ -63,24 +45,16 @@ export default function Page() {
           <h2>Médico</h2>
           {activeForm !== 'medico' && (
             <>
-              <button onClick={() => 
-                handleButtonClick('medico')}>Entrar</button>
+              <button onClick={() => handleButtonClick('medico')}>Entrar</button>
               <SignupButton />
             </>
           )}
           {activeForm === 'medico' && (
-            <form>
-              <input 
-                type="text"
-                required
-                name="crm"
-                placeholder="Insira seu CRM"
-                className={styles.input}
-              />
-              <button type="submit" 
-                className={styles.button}>Entrar
-              </button>
-            </form>
+            <LoginForm 
+              formType="crm" 
+              placeholder="Insira seu CRM" 
+              onSubmit={(e) => { e.preventDefault(); /* handle submit logic */ }} 
+            />
           )}
         </section>
 
@@ -88,26 +62,11 @@ export default function Page() {
           <h2>Admin</h2>
           {activeForm !== 'admin' && (
             <>
-              <button 
-                onClick={() => handleButtonClick('admin')}>Entrar
-              </button>
+              <button onClick={() => handleButtonClick('admin')}>Entrar</button>
             </>
           )}
           {activeForm === 'admin' && (
-            <form onSubmit={(e) => handleAdminSubmit(e, null, null)}>
-              <input 
-                type="text"
-                required
-                name="credential"
-                placeholder="Insira sua credencial"
-                className={styles.input}
-                value={adminCredential}
-                onChange={(e) => setAdminCredential(e.target.value)}
-              />
-              <button 
-                type="submit" className={styles.button}>Entrar
-              </button>
-            </form>
+            <AdminLoginForm />
           )}
         </section>
       </div>
