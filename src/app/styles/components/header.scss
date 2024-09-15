@@ -1,0 +1,116 @@
+header {
+    background-color: var(--header);
+    padding: 10px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+h1 {
+    font-size: 1.5em;
+    margin: 0;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+li {
+    margin: 0 15px;
+    position: relative;
+}
+
+a {
+    color: var(--background);
+    text-decoration: none; /* Remove underline from links */
+    padding: 10px 15px;
+    display: block;
+    &:hover {
+        text-decoration: none; /* Ensure no underline on hover */
+        background-color: #0f5a8e; /* Darker hover color */
+    }
+}
+
+.dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var(--header);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    display: none;
+    flex-direction: column;
+    min-width: 160px;
+    border-radius: 1rem;
+    border: 4px solid var(--effects);
+}
+
+.dropdown a {
+    padding: 10px 15px;
+    text-decoration: none; /* Remove underline from dropdown links */
+    &:hover {
+        text-decoration: none; /* Ensure no underline on hover */
+        background-color: #0f5a8e; /* Darker hover color */
+    }
+}
+
+li:hover .dropdown {
+    display: flex;
+}
+
+.login-button {
+    background: none;
+    border: none;
+    color: var(--background);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 1em;
+    padding: 10px 30px;
+}
+
+.login-button svg {
+    margin-right: 5px;
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: center; 
+    }
+
+    h1 {
+        margin-bottom: 10px; 
+    }
+
+    nav {
+        width: 100%;
+        flex-direction: column;
+        align-items: center; 
+    }
+
+    ul {
+        flex-direction: column;
+        width: 100%;
+        align-items: center; 
+    }
+
+    li {
+        margin: 10px 0;
+    }
+
+    .login-button {
+        width: 100%;
+        justify-content: center;
+    }
+}
