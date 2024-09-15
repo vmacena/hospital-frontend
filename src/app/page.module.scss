@@ -1,0 +1,74 @@
+.containerCenter {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .panel {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    width: 600px;
+    padding: 16px;
+    border: 1px solid var(--gray-100);
+    border-radius: 8px;
+    background-color: var(--dark-700);
+  }
+  
+  .panel h2 {
+    color: var(--orange-900);
+  }
+  
+  .panel button {
+    height: 40px;
+    font-size: 16px;
+    background-color: var(--red-900);
+    border: 0;
+    border-radius: 8px;
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s;
+    width: 100%;
+    margin-top: 16px;
+  }
+  
+  .panel button:hover {
+    transform: scale(1.05);
+  }
+  
+  .input {
+    height: 40px;
+    border: 1px solid var(--gray-100);
+    padding: 0 16px;
+    border-radius: 8px;
+    background-color: var(--dark-900);
+    color: var(--white);
+    font-size: 16px;
+    margin-bottom: 16px;
+    margin: 2px;
+  }
+  
+  .input::placeholder {
+    color: rgba(255, 255, 255, 0.700);
+  }
+  
+  .imageZoom {
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .imageZoom:hover {
+    transform: scale(1.1);
+  }
+  
+  @media (max-width: 620px) {
+    .panel {
+      width: 90%;
+    }
+  }
