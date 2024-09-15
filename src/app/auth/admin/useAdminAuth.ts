@@ -30,7 +30,7 @@ export const useAdminAuth = () => {
         console.log('Dados recebidos:', data); 
         if (data.token) {
           localStorage.setItem('token', data.token);
-          router.push('/dashboardAdmin');
+          router.push('/pages/dashboardAdmin');
         } else {
           toast.error('Credencial inválida');
         }

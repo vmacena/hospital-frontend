@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import styles from '../page.module.scss'
+import styles from './../../page.module.scss'
 import logoImg from '/public/logo.svg'
 
 export default function Signup() {
@@ -11,7 +11,7 @@ export default function Signup() {
       <div className={styles.containerCenter}>
         <Image
           src={logoImg}
-          alt="Logo da pizzaria"
+          alt="Logo"
           className={styles.imageZoom}
         />
 

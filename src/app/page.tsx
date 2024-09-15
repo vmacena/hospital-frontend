@@ -11,7 +11,7 @@ function SignupButton() {
   const router = useRouter();
 
   const handleSignupClick = () => {
-    router.push('/signup');
+    router.push('/pages/signup');
   };
 
   return (
@@ -33,7 +33,7 @@ export default function Page() {
       <div className={styles.containerCenter}>
         <Image
           src={logoImg}
-          alt="Logo da pizzaria"
+          alt="Logo"
           className={styles.imageZoom}
         />
 

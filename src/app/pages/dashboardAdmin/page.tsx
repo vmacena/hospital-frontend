@@ -1,6 +1,6 @@
 import React from 'react';
-import { FaUsers, FaCalendarAlt, FaStethoscope, FaSignOutAlt } from 'react-icons/fa'; // Importando ícones
-import styles from '../styles/dashAdmin/dash.module.scss'; // Importando o arquivo CSS
+import { FaUsers, FaCalendarAlt, FaStethoscope, FaSignOutAlt } from 'react-icons/fa'; 
+import styles from '../../styles/dashAdmin/dash.module.scss'; 
 
 export default function AdminDashboard() {
   return (
