@@ -1,13 +1,14 @@
 import React from 'react';
 import { FaUsers, FaCalendarAlt, FaStethoscope, FaSignOutAlt } from 'react-icons/fa'; 
 import styles from '../../styles/dashAdmin/dash.module.scss'; 
+import LogsTable from '@/app/components/LogsTable';
 
 export default function AdminDashboard() {
   return (
     <div className={styles.containerCenter}>
       <Sidebar />
       <div className={styles.panel}>
-        <h2>Admin Dashboard</h2>
+        <LogsTable />
       </div>
     </div>
   );

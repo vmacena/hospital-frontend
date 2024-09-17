@@ -1,16 +1,65 @@
-.table {
+.logsTableContainer {
+    max-width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza horizontalmente */
+  }
+  
+  .tableWrapper {
+    max-width: 100%;
+    max-height: 700px; /* Defina a altura máxima desejada */
+    overflow-y: auto; /* Adicione rolagem vertical */
+    overflow-x: auto; /* Adicione rolagem horizontal */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para dar destaque */
+  }
+  
+  /* Estilização da barra de rolagem */
+  .tableWrapper::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+  
+  .tableWrapper::-webkit-scrollbar-track {
+    background: var(--dark-700);
+    border-radius: 8px;
+  }
+  
+  .tableWrapper::-webkit-scrollbar-thumb {
+    background: var(--dark-900);
+    border-radius: 8px;
+  }
+  
+  .tableWrapper::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  
+  .logsTable {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: var(--dark-700); 
+    color: var(--white);
+  
+    th, td {
+      padding: 12px;
+      border: 1px solid var(--orange-900);
+      text-align: left;
+    }
+  
+    th {
+      background-color: var(--orange-900);
+      color: var(--dark-900);
+    }
   }
   
-  .table th,
-  .table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-  }
-  
-  .table th {
-    background-color: #f2f2f2;
-    text-align: left;
+  .h2 {
+    margin-bottom: 20px;
+    color: var(--orange-900); 
+    text-align: center; 
+    background: var(--dark-700);
+    border-radius: 8px;
   }

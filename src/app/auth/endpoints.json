@@ -1,4 +1,5 @@
 {
     "loginAdmin": "http://localhost:8080/admin/login",
-    "loginPatient": "http://localhost:8080/patient/login"
+    "loginPatient": "http://localhost:8080/patient/login",
+    "logAccess": "http://localhost:8080/logs"
   }
