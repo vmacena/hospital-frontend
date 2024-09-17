@@ -12,8 +12,8 @@ import { useDoctorAuth } from './auth/doctor/useDoctorAuth';
 
 export default function Page() {
   const [activeForm, setActiveForm] = useState<string | null>(null);
-  const { susNumber, setSusNumber, handlePatientSubmit } = usePatientAuth();
-  const { crmNumber, setCrmNumber, handleDoctorSubmit } = useDoctorAuth();
+  const { susNumber, setSusNumber, isLoading, handlePatientSubmit } = usePatientAuth();
+  const { crmNumber, setCrmNumber, isLoading, handleDoctorSubmit } = useDoctorAuth();
 
   const handleButtonClick = (formType: string) => {
     setActiveForm(formType);
@@ -41,7 +41,7 @@ export default function Page() {
               formType="susNumber" 
               placeholder="Insira seu número SUS" 
               onSubmit={handlePatientSubmit} 
-              isLoading={false}
+              isLoading={isLoading}
               inputValue={susNumber}
               setInputValue={setSusNumber}
             />
@@ -60,8 +60,8 @@ export default function Page() {
             <LoginForm 
               formType="crm" 
               placeholder="Insira seu CRM" 
-              onSubmit={(e) => { e.preventDefault(); /* handle submit logic */ }} 
-              isLoading={false}
+              onSubmit={handleDoctorSubmit}
+              isLoading={isLoading}
               inputValue={crmNumber}
               setInputValue={setCrmNumber}
             />
