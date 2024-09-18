@@ -13,7 +13,7 @@ import { useDoctorAuth } from './auth/doctor/useDoctorAuth';
 export default function Page() {
   const [activeForm, setActiveForm] = useState<string | null>(null);
   const { susNumber, setSusNumber, isLoading, handlePatientSubmit } = usePatientAuth();
-  const { crmNumber, setCrmNumber, isLoading, handleDoctorSubmit } = useDoctorAuth();
+  const { crmNumber, setCrmNumber, handleDoctorSubmit } = useDoctorAuth();
 
   const handleButtonClick = (formType: string) => {
     setActiveForm(formType);
