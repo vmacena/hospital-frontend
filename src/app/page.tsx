@@ -11,7 +11,7 @@ import { usePatientAuth } from './auth/patient/usePatientAuth';
 
 export default function Page() {
   const [activeForm, setActiveForm] = useState<string | null>(null);
-  const { susNumber, setSusNumber, isLoading, handlePatientSubmit } = usePatientAuth();
+  const { susNumber, setSusNumber, handlePatientSubmit } = usePatientAuth();
 
   const handleButtonClick = (formType: string) => {
     setActiveForm(formType);
