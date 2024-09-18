@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaCalendarAlt, FaUser, FaClipboardList, FaSignOutAlt } from 'react-icons/fa'; 
-import styles from '../../styles/dashDoctor/dash.module.scss'; 
+import styles from '@/app/assets/styles/dashDoctor/dash.module.scss'; 
 
 export default function DoctorDashboard() {
   return (

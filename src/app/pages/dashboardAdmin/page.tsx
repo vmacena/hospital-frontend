@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaUsers, FaCalendarAlt, FaStethoscope, FaSignOutAlt } from 'react-icons/fa'; 
-import styles from '../../styles/dashAdmin/dash.module.scss'; 
+import styles from '@/app/assets/styles/dashAdmin/dash.module.scss'; 
 import LogsTable from '@/app/components/LogsTable';
 
 export default function AdminDashboard() {

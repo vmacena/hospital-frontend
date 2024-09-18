@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaCalendarAlt, FaUserMd, FaUser, FaSignOutAlt } from 'react-icons/fa'; 
-import styles from '../../styles/dashPatient/dash.module.scss'; 
+import styles from '@/app/assets/styles/dashPatient/dash.module.scss'; 
 
 export default function PatientDashboard() {
   return (
