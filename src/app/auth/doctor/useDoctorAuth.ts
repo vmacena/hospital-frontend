@@ -4,21 +4,21 @@ import endpoints from './../endpoints.json';
 import { toast } from 'react-toastify';
 
 export const useDoctorAuth = () => {
-  const [crmNumber, setCrmNumber] = useState<string>(''); // Substituindo o SUS pelo CRM
+  const [crm, setCrmNumber] = useState<string>('');
   const router = useRouter();
 
   const handleDoctorSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
     try {
-      console.log('Enviando número CRM:', crmNumber);
+      console.log('Enviando número CRM:', crm);
 
       const response = await fetch(endpoints.loginDoctor, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ crmNumber })
+        body: JSON.stringify({ crm })
       });
 
       console.log('Resposta da API:', response);
@@ -45,7 +45,7 @@ export const useDoctorAuth = () => {
   };
 
   return {
-    crmNumber,
+    crm,
     setCrmNumber,
     handleDoctorSubmit
   };
