@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState } from 'react';
 import styles from './page.module.scss';
@@ -8,12 +8,13 @@ import SignupButton from './components/SignupButton';
 import LoginForm from './components/LoginForm';
 import AdminLoginForm from './components/AdminLoginForm';
 import { usePatientAuth } from './auth/patient/usePatientAuth';
+import { useDoctorAuth } from './auth/doctor/useDoctorAuth';
 
 export default function Page() {
     const [activeForm, setActiveForm] = useState<string | null>(null);
     const { susNumber, setSusNumber, handlePatientSubmit } = usePatientAuth();
+    const { crm, setCrmNumber, handleDoctorSubmit } = useDoctorAuth();
     const [isLoading, setIsLoading] = useState(false);
-    const [crm, setCrm] = useState<string>("");
 
     const handleButtonClick = (formType: string) => {
         setActiveForm(formType);
@@ -60,10 +61,10 @@ export default function Page() {
                         <LoginForm
                             formType="crm"
                             placeholder="Insira seu CRM"
-                            onSubmit={(e) => { e.preventDefault(); /* handle submit logic */ }}
-                            isLoading={false}
+                            onSubmit={handleDoctorSubmit}
+                            isLoading={isLoading}
                             inputValue={crm}
-                            setInputValue={setCrm}
+                            setInputValue={setCrmNumber}
                         />
                     )}
                 </section>
