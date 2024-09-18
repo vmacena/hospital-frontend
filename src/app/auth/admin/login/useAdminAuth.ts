@@ -15,7 +15,7 @@ export const useAdminAuth = () => {
         try {
             console.log('Enviando credencial:', adminCredential);
 
-            const response = await fetch(endpoints.loginAdmin, {
+            const response = await fetch(endpoints.admin.login, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

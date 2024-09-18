@@ -1,6 +1,21 @@
 {
-    "loginAdmin": "http://localhost:8080/admin/login",
-    "loginPatient": "http://localhost:8080/patient/login",
-    "loginDoctor": "http://localhost:8080/doctor/login",
-    "logAccess": "http://localhost:8080/logs"
-  }
+    "admin": {
+        "login": "http://localhost:8080/admin/login",
+        "register": "http://localhost:8080/admin/register",
+        "logAccess": "http://localhost:8080/logs"
+    },
+    "patient": {
+        "login": "http://localhost:8080/patient/login",
+        "register": "http://localhost:8080/patient/register",
+        "getData": "http://localhost:8080/patient/:id"
+    },
+    "doctor": {
+        "login": "http://localhost:8080/doctor/login",
+        "register": "http://localhost:8080/doctor/register",
+        "findAllPatients": "http://localhost:8080/doctor/patients",
+        "findAppointmentsAndExams": "http://localhost:8080/doctor/appointments-exams"
+    },
+    "exam": {
+        "schedule": "http://localhost:8080/exam/schedule"
+    }
+}

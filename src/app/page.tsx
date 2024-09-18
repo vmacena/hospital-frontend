@@ -13,6 +13,7 @@ export default function Page() {
     const [activeForm, setActiveForm] = useState<string | null>(null);
     const { susNumber, setSusNumber, handlePatientSubmit } = usePatientAuth();
     const [isLoading, setIsLoading] = useState(false);
+    const [crm, setCrm] = useState<string>("");
 
     const handleButtonClick = (formType: string) => {
         setActiveForm(formType);
@@ -61,8 +62,8 @@ export default function Page() {
                             placeholder="Insira seu CRM"
                             onSubmit={(e) => { e.preventDefault(); /* handle submit logic */ }}
                             isLoading={false}
-                            inputValue=""
-                            setInputValue={() => { }}
+                            inputValue={crm}
+                            setInputValue={setCrm}
                         />
                     )}
                 </section>

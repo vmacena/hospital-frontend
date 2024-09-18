@@ -10,7 +10,7 @@ const useFetchLogs = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
 
-    fetch(endpoints.logAccess, {
+    fetch(endpoints.admin.logAccess, {
       headers: {
         'Authorization': `Bearer ${token}`
       }

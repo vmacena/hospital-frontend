@@ -13,7 +13,7 @@ export const useDoctorAuth = () => {
     try {
       console.log('Enviando número CRM:', crm);
 
-      const response = await fetch(endpoints.loginDoctor, {
+      const response = await fetch(endpoints.doctor.login, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

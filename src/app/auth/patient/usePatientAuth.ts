@@ -13,7 +13,7 @@ export const usePatientAuth = () => {
     try {
       console.log('Enviando número SUS:', susNumber);
 
-      const response = await fetch(endpoints.loginPatient, {
+      const response = await fetch(endpoints.patient.login, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

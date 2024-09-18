@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import styles from '../styles/dashAdmin/table.module.scss';
+import styles from '@/app/assets/styles/dashAdmin/table.module.scss';
 import useFetchLogs from '@/app/auth/admin/logs/useFetchLogs';
 
 const LogsTable: React.FC = () => {
