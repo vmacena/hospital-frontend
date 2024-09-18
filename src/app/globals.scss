@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap');
+
+* {
+  font-family: 'SUSE', sans-serif; /* Define a fonte globalmente */
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -10,13 +16,19 @@
   --white: #FFF;
   --black: #000;
 
-  --dark-900: #050505;
-  --dark-700: #181818;
+  --dark-900: #151515;
+  --dark-700: #121214;
 
-  --gray-100: #8a8a8a;
+  --gray-400: #27272A;
   --green-900: #3fffa3;
-  --red-900: #05AAA8;
-  --orange-900: #52ddda;
+  --blue-900: #05AAA8;
+  --blue-700: #52ddda;
+  --blue-1000: #0A0A18; 
+
+  --purple-500: #9956F6;
+  --purple-300: #b47cff;
+
+
 
   
 }
