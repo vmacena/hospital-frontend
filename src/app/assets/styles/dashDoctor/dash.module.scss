@@ -7,13 +7,17 @@
   
   .sidebar {
     width: 250px;
-    background-color: var(--dark-700);
+    background-color: var(--color-secondary);
     padding: 16px;
     height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     border-right: 2px solid var(--color-primary);
+  }
+
+  .sidebar h2 {
+    color: var(--color-text-light)
   }
   
   .sidebar ul {
@@ -72,11 +76,13 @@
     align-items: center;
     justify-content: center;
     padding: 16px;
-    background: var(--blue-1000);
+    background: var(--color-background);
   }
   
   .panel h2 {
-    color: var(--white);
+    align-self:first baseline;
+    color: var(--color-secondary);
+    padding: 12px;
   }
   
   .panel button {
@@ -164,11 +170,13 @@
   }
   
   .tableWrapper {
+    background-color: var(--color-background-light);
     flex: 1;
     max-height: 700px; 
     overflow-y: auto; 
     overflow-x: auto; 
-    border-radius: 8px; 
+    border-radius: 12px; 
+    border: 2px solid var(--color-highlight);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
   }
   
@@ -192,16 +200,15 @@
   }
 
   .tableWrapper h3 {
-    color: var(--white);
-    margin: 2px;
+    color: var(--color-primary);
+    margin: 12px;
   }
   
   .logsTable {
     width: 100%; 
     border-collapse: collapse;
     border-radius: 8px;
-    background-color: var(--dark-700); 
-    color: var(--white);
+    color: var(--color-text);
   
     th, td {
       padding: 12px;
@@ -211,24 +218,22 @@
     }
   
     th {
-      background-color: var(--gray-400);
-      color: var(--white);
+      background-color: var(--color-primary);
+      color: var(--color-text-light);
     }
   
     th:first-child {
-      border-top-left-radius: 40px; 
-      border-bottom-left-radius: 40px; 
+      border-radius: 0;
     }
   
     th:last-child {
-      border-top-right-radius: 40px; 
-      border-bottom-right-radius: 40px; 
+      border-radius: 0;
     }
   }
   
   .h2 {
     margin-bottom: 20px;
-    color: var(--white); 
+    color: var(--color-secondary); 
     text-align: center; 
     border-radius: 8px;
   }

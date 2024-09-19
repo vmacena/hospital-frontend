@@ -61,7 +61,6 @@ export default function DoctorDashboard() {
     <div className={styles.containerCenter}>
       <Sidebar />
       <div className={styles.panel}>
-        <h2>Doctor Dashboard</h2>
         <div className={styles.tablesContainer}>
           <div className={styles.tableWrapper}>
             <h3>Consultas Agendadas</h3>
@@ -126,6 +125,7 @@ export default function DoctorDashboard() {
 function Sidebar() {
   return (
     <div className={styles.sidebar}>
+      <h2>Doctor Dashboard</h2>
       <ul>
         <li>
           <a href="/doctor/view-appointments">
