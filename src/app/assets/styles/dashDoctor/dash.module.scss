@@ -173,11 +173,12 @@
     background-color: var(--color-background-light);
     flex: 1;
     max-height: 700px; 
+    padding: 8px;
     overflow-y: auto; 
     overflow-x: auto; 
     border-radius: 12px; 
     border: 2px solid var(--color-highlight);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
   }
   
   .tableWrapper::-webkit-scrollbar {
@@ -199,9 +200,8 @@
     background: var(--color-highlight);
   }
 
-  .tableWrapper h3 {
-    color: var(--color-primary);
-    margin: 12px;
+  .tableWrapper h2 {
+    color: var(--color-secondary);
   }
   
   .logsTable {
@@ -223,11 +223,15 @@
     }
   
     th:first-child {
-      border-radius: 0;
+      border-top-left-radius: 16px;
     }
   
     th:last-child {
-      border-radius: 0;
+      border-top-right-radius: 16px;
+    }
+
+    td:nth-child(2n) {
+      background-color: var(--color-background);
     }
   }
   

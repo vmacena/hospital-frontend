@@ -63,7 +63,7 @@ export default function DoctorDashboard() {
       <div className={styles.panel}>
         <div className={styles.tablesContainer}>
           <div className={styles.tableWrapper}>
-            <h3>Consultas Agendadas</h3>
+            <h2>Consultas Agendadas</h2>
             <table className={styles.logsTable}>
               <thead>
                 <tr>
@@ -90,7 +90,7 @@ export default function DoctorDashboard() {
             </table>
           </div>
           <div className={styles.tableWrapper}>
-            <h3>Exames Agendados</h3>
+            <h2>Exames Agendados</h2>
             <table className={styles.logsTable}>
               <thead>
                 <tr>
