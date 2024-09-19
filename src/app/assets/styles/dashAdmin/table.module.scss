@@ -27,12 +27,12 @@
   }
   
   .tableWrapper::-webkit-scrollbar-thumb {
-    background: var(--purple-500);
+    background: var(--color-primary);
     border-radius: 8px;
   }
   
   .tableWrapper::-webkit-scrollbar-thumb:hover {
-    background: var(--purple-300);
+    background: var(--color-highlight);
   }
   
   .logsTable {

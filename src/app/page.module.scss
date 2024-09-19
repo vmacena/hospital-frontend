@@ -27,7 +27,7 @@
   .panel button {
     height: 40px;
     font-size: 16px;
-    background-color: var(--purple-500);
+    background-color: var(--color-primary);
     border: 0;
     border-radius: 8px;
     color: var(--white);
@@ -41,7 +41,7 @@
   
   .panel button:hover {
     transform: scale(1.05);
-    background-color: var(--purple-300);
+    background-color: var(--color-highlight);
   }
   
   .input {
