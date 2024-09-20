@@ -28,6 +28,7 @@
   --purple-500: #9956F6;
   --purple-300: #b47cff;
 
+  --green-200: #71E1DB;
   --color-highlight: #40e0d0;
   --color-primary: #05AAA8;
   --color-secondary: #008080;
@@ -50,7 +51,7 @@ a{
 }
 
 body{
-  background: var(--dark-900);
+  background: var(--green-200);
 }
 
 body, input, textarea, select, button{

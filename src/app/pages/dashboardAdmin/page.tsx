@@ -19,7 +19,7 @@ function Sidebar() {
     <div className={styles.sidebar}>
       <ul>
         <li>
-          <a href="/manage-users">
+          <a href="dashboardAdmin/userManage">
             <FaUsers style={{ marginRight: '8px' }} />
             Gerenciar Usuários
           </a>
