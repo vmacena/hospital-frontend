@@ -226,6 +226,7 @@ export default function PatientDashboard() {
 function Sidebar({ setActiveView }: { setActiveView: (view: 'viewAppointments' | 'bookAppointment' | 'viewExams' | 'profile' | 'stats') => void }) {
   return (
     <div className={styles.sidebar}>
+      <h2>Menu</h2>
       <ul>
         <li>
           <button onClick={() => setActiveView('viewAppointments')} className={styles.sidebarButton}>
