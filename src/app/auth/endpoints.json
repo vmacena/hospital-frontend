@@ -2,12 +2,38 @@
     "admin": {
         "login": "http://localhost:8080/admin/login",
         "register": "http://localhost:8080/admin/register",
-        "logAccess": "http://localhost:8080/logs"
+        "stats": "http://localhost:8080/admin/stats",
+        "appointments": {
+            "create": "http://localhost:8080/admin/appointments",
+            "update": "http://localhost:8080/admin/appointments/:id",
+            "delete": "http://localhost:8080/admin/appointments/:id",
+            "findAll": "http://localhost:8080/admin/appointments"
+        },
+        "exams": {
+            "create": "http://localhost:8080/admin/exams",
+            "update": "http://localhost:8080/admin/exams/:id",
+            "delete": "http://localhost:8080/admin/exams/:id",
+            "findAll": "http://localhost:8080/admin/exams"
+        },
+        "logs": "http://localhost:8080/logs"
     },
     "patient": {
         "login": "http://localhost:8080/patient/login",
         "register": "http://localhost:8080/patient/register",
-        "getData": "http://localhost:8080/patient/:id"
+        "getData": "http://localhost:8080/patient/:id",
+        "appointments": {
+            "create": "http://localhost:8080/patient/appointments",
+            "findAll": "http://localhost:8080/patient/appointments",
+            "updateDate": "http://localhost:8080/patient/appointments/update-date",
+            "cancel": "http://localhost:8080/patient/appointments/cancel",
+            "finish": "http://localhost:8080/patient/appointments/finish"
+        },
+        "exams": {
+            "create": "http://localhost:8080/patient/exams",
+            "findAll": "http://localhost:8080/patient/exams",
+            "updateDate": "http://localhost:8080/patient/exams/update-date",
+            "cancel": "http://localhost:8080/patient/exams/cancel"
+        }
     },
     "doctor": {
         "login": "http://localhost:8080/doctor/login",
