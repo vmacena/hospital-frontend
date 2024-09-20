@@ -1,4 +1,117 @@
-.containerCenter {
+.backgroundSection {
+    background-image: url('../../public/shape-1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh; 
+    width: 100%; 
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .secondSection {
+    background-image: url('../../public/shape-6.png');
+    background-repeat: no-repeat;
+    color: var(--white);
+    display: flex;
+    height: 60vh;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .cardContainer {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .customCard {
+    background-color: var(--blue-50);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 10px;
+    width: 300px;
+    height: 300px; 
+    text-align: center;
+  }
+  
+  .customCard h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .customCard p {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .icon {
+    color: var(--green-300); 
+    font-size: 50px; 
+    margin-bottom: 10px; 
+  }
+  
+  .body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Responsiveness */
+  @media (max-width: 768px) {
+    .backgroundSection {
+      height: auto; 
+    }
+  
+    .secondSection {
+      height: auto; 
+      flex-direction: column;
+      padding: 20px;
+    }
+  
+    .cardContainer {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .customCard {
+      width: 100%; 
+      height: auto; 
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .backgroundSection {
+      padding: 10px;
+    }
+  
+    .secondSection {
+      padding: 10px;
+    }
+  
+    .customCard {
+      padding: 10px;
+    }
+  
+    .customCard h2 {
+      font-size: 16px;
+    }
+  
+    .customCard p {
+      font-size: 12px;
+    }
+  
+    .icon {
+      font-size: 40px;
+    }
+  }
+
+  //old
+
+  .containerCenter {
     min-height: 100vh;
     display: flex;
     flex-direction: column;

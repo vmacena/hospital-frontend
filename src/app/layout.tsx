@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Hospital Universitário",
+  title: "MEDICare",
   description: "Entre morto e saia vivo",
 };
 
@@ -18,6 +18,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+        <head>
+            <link rel="shortcut icon" href="logo.png" type="image/x-icon" />
+        </head>
       <body className={inter.className}>
         {children}
         <ToastContainer 

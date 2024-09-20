@@ -1,86 +1,52 @@
 "use client";
 
-import { useState } from 'react';
-import styles from './page.module.scss';
-import logoImg from '/public/logo.svg';
-import Image from 'next/image';
-import SignupButton from './components/SignupButton';
-import LoginForm from './components/LoginForm';
-import AdminLoginForm from './components/AdminLoginForm';
-import { usePatientAuth } from './auth/patient/usePatientAuth';
-import { useDoctorAuth } from './auth/doctor/useDoctorAuth';
+import Topbar from '@/app/components/TopBar'; 
+import Navbar from './components/NavBar';
+import { Card, Container, Row, Col } from 'react-bootstrap';
+import { FaUserMd, FaAmbulance, FaStethoscope } from 'react-icons/fa'; 
+import 'bootstrap/dist/css/bootstrap.min.css'; 
+import styles from './page.module.scss'; 
 
 export default function Page() {
-    const [activeForm, setActiveForm] = useState<string | null>(null);
-    const { susNumber, setSusNumber, handlePatientSubmit } = usePatientAuth();
-    const { crm, setCrmNumber, handleDoctorSubmit } = useDoctorAuth();
-    const [isLoading, setIsLoading] = useState(false);
-
-    const handleButtonClick = (formType: string) => {
-        setActiveForm(formType);
-    };
-
     return (
-        <>
-            <div className={styles.containerCenter}>
-                <Image
-                    src={logoImg}
-                    alt="Logo"
-                    className={styles.imageZoom}
-                />
-
-                <section className={styles.panel}>
-                    <h2>Paciente</h2>
-                    {activeForm !== 'paciente' && (
-                        <>
-                            <button onClick={() => handleButtonClick('paciente')}>Entrar</button>
-                            <SignupButton />
-                        </>
-                    )}
-                    {activeForm === 'paciente' && (
-                        <LoginForm
-                            formType="susNumber"
-                            placeholder="Insira seu número SUS"
-                            onSubmit={handlePatientSubmit}
-                            isLoading={isLoading}
-                            inputValue={susNumber}
-                            setInputValue={setSusNumber}
-                        />
-                    )}
-                </section>
-
-                <section className={styles.panel}>
-                    <h2>Médico</h2>
-                    {activeForm !== 'medico' && (
-                        <>
-                            <button onClick={() => handleButtonClick('medico')}>Entrar</button>
-                            <SignupButton />
-                        </>
-                    )}
-                    {activeForm === 'medico' && (
-                        <LoginForm
-                            formType="crm"
-                            placeholder="Insira seu CRM"
-                            onSubmit={handleDoctorSubmit}
-                            isLoading={isLoading}
-                            inputValue={crm}
-                            setInputValue={setCrmNumber}
-                        />
-                    )}
-                </section>
-
-                <section className={styles.panel}>
-                    <h2>Admin</h2>
-                    {activeForm !== 'admin' && (
-                        <>
-                            <button onClick={() => handleButtonClick('admin')}>Entrar</button>
-                        </>
-                    )}
-                    {activeForm === 'admin' && (
-                        <AdminLoginForm />
-                    )}
-                </section>
-            </div>
-        </>
+      <>
+        <section className={styles.backgroundSection}>
+          <Topbar />
+          <Navbar />
+        </section>
+        <section className={styles.secondSection}>
+          <Container>
+            <Row>
+              <Col md={4}>
+                <Card className={styles.customCard}>
+                  <Card.Body>
+                    <FaUserMd className={styles.icon} /> 
+                    <Card.Title>Profissionais Qualificados</Card.Title>
+                    <Card.Text>texto aqui que nao sei</Card.Text>
+                  </Card.Body>
+                </Card>
+              </Col>
+              <Col md={4}>
+                <Card className={styles.customCard}>
+                  <Card.Body>
+                    <FaAmbulance className={styles.icon} /> 
+                    <Card.Title>Atendimento 24h</Card.Title>
+                    <Card.Text>texto aqui que nao sei</Card.Text>
+                  </Card.Body>
+                </Card>
+              </Col>
+              <Col md={4}>
+                <Card className={styles.customCard}>
+                  <Card.Body>
+                    <FaStethoscope className={styles.icon} /> 
+                    <Card.Title>Equipamentos Modernos</Card.Title>
+                    <Card.Text>texto aqui que nao sei</Card.Text>
+                  </Card.Body>
+                </Card>
+              </Col>
+            </Row>
+          </Container>
+        </section>
+      </>
     );
 }

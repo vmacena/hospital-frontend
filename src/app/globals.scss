@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap');
 
 * {
-  font-family: 'SUSE', sans-serif; /* Define a fonte globalmente */
+  font-family: 'SUSE', sans-serif; 
+  text-decoration: none;
 }
 
 * {
@@ -12,6 +13,13 @@
 }
 
 :root{
+
+    //new
+    --blue-50: #ADE8F2;
+    --blue-800: #0E1136;
+    --gray-33: #333;
+    --green-300: #636511;
+    //
 
   --white: #FFF;
   --black: #000;
@@ -51,7 +59,7 @@ a{
 }
 
 body{
-  background: var(--green-200);
+  background: var(--blue-50);
 }
 
 body, input, textarea, select, button{

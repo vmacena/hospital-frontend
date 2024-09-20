@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import styles from './../../page.module.scss';
-import logoImg from '/public/logo.svg';
+import logoImg from '/public/logo.png';
 import { useDoctorRegister } from '@/app/auth/signup/doctor/useDoctorRegister';
 import { usePatientRegister } from '@/app/auth/signup/patient/usePatientRegister';
 import PatientModal from '@/app/pages/signup/PatientModal';
