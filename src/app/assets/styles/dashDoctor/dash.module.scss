@@ -16,6 +16,26 @@
     border-right: 2px solid var(--color-primary);
   }
 
+  .sidebarButton {
+    background: none;
+    border: none;
+    color: var(--white);
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+  }
+  
+  .sidebarButton:hover {
+    background-color: var(--color-primary);
+    color: var(--white);
+  }
+
   .sidebar h2 {
     color: var(--color-text-light)
   }
@@ -79,6 +99,11 @@
     background: var(--color-background);
   }
   
+  .panel h1 {
+    align-self:first center;
+    color: var(--color-secondary);
+    padding: 12px;
+  }
   .panel h2 {
     align-self:first baseline;
     color: var(--color-secondary);
@@ -172,13 +197,29 @@
   .tableWrapper {
     background-color: var(--color-background-light);
     flex: 1;
-    max-height: 700px; 
+    max-height: calc(100vh - 100px);
     padding: 8px;
     overflow-y: auto; 
     overflow-x: auto; 
     border-radius: 12px; 
     border: 2px solid var(--color-highlight);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+  }
+
+  .tableWrapper {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .fadeIn {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .fadeOut {
+    opacity: 0;
+    transform: translateY(10px);
   }
   
   .tableWrapper::-webkit-scrollbar {

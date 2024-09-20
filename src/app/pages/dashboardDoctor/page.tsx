@@ -23,8 +23,10 @@ export default function DoctorDashboard() {
     type: string;
   }
 
+  const [activeTable, setActiveTable] = useState<'appointments' | 'exams'>('appointments');
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [exams, setExams] = useState<Exam[]>([]);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
     const fetchAppointmentsAndExams = async () => {
@@ -57,12 +59,26 @@ export default function DoctorDashboard() {
     fetchAppointmentsAndExams();
   }, []);
 
+  const handleTableChange = (table: 'appointments' | 'exams') => {
+    setIsAnimating(true); 
+    setTimeout(() => {
+      setActiveTable(table); 
+      setIsAnimating(false); 
+    }, 300); 
+  };
+
   return (
     <div className={styles.containerCenter}>
-      <Sidebar />
+      <Sidebar setActiveTable={handleTableChange} />
       <div className={styles.panel}>
+      <h1>Doctor Dashboard</h1>
         <div className={styles.tablesContainer}>
-          <div className={styles.tableWrapper}>
+        {activeTable === 'appointments' ? (
+          <div
+          className={`${styles.tableWrapper} ${
+            isAnimating ? styles.fadeOut : styles.fadeIn
+          }`}
+          >
             <h2>Consultas Agendadas</h2>
             <table className={styles.logsTable}>
               <thead>
@@ -89,7 +105,12 @@ export default function DoctorDashboard() {
               </tbody>
             </table>
           </div>
-          <div className={styles.tableWrapper}>
+        ) : (
+          <div
+          className={`${styles.tableWrapper} ${
+            isAnimating ? styles.fadeOut : styles.fadeIn
+          }`}
+          >
             <h2>Exames Agendados</h2>
             <table className={styles.logsTable}>
               <thead>
@@ -116,42 +137,39 @@ export default function DoctorDashboard() {
               </tbody>
             </table>
           </div>
+        )}
         </div>
       </div>
     </div>
   );
 }
 
-function Sidebar() {
+function Sidebar({ setActiveTable }: { setActiveTable: (table: 'appointments' | 'exams') => void }) {
   return (
-    <div className={styles.sidebar}>
-      <h2>Doctor Dashboard</h2>
+    <aside className={styles.sidebar}>
+      <h2>Menu</h2>
       <ul>
         <li>
-          <a href="/doctor/view-appointments">
+          <button onClick={() => setActiveTable('appointments')} className={styles.sidebarButton}>
             <FaCalendarAlt style={{ marginRight: '8px' }} />
             Ver Consultas
-          </a>
+          </button>
         </li>
         <li>
-          <a href="/doctor/patients">
-            <FaUser style={{ marginRight: '8px' }} />
-            Ver Pacientes
-          </a>
-        </li>
-        <li>
-          <a href="/doctor/exams">
+          <button onClick={() => setActiveTable('exams')} className={styles.sidebarButton}>
             <FaClipboardList style={{ marginRight: '8px' }} />
             Ver Exames
-          </a>
+          </button>
         </li>
       </ul>
-      <div className={styles.signout}>
-        <a href="/">
-          <FaSignOutAlt style={{ marginRight: '8px' }} />
-          Sair
-        </a>
+      <div className={styles.signoutWrapper}>
+        <div className={styles.signout}>
+          <a href="/">
+            <FaSignOutAlt style={{ marginRight: '8px' }} />
+            Sair
+          </a>
+        </div>
       </div>
-    </div>
+    </aside>
   );
 }
