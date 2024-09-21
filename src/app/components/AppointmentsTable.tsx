@@ -106,7 +106,6 @@ const AppointmentsTable: React.FC = () => {
         }
       });
       console.log(`Appointment with ID: ${id} deleted successfully`);
-      // Update the state to remove the deleted appointment
       setAppointments(prevAppointments =>
         prevAppointments.filter(appointment => appointment.id !== id)
       );
@@ -117,7 +116,7 @@ const AppointmentsTable: React.FC = () => {
 
   return (
     <div className={styles.logsTableContainer}>
-      <h2 className={styles.h2}>Appointments</h2>
+      <h2 className={styles.h2}>Gerenciar Consultas</h2>
       <div className={styles.tableWrapper}>
         <table className={styles.logsTable}>
           <thead>
