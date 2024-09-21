@@ -3,11 +3,8 @@
 import React, { useEffect, useState } from "react";
 import {
   FaCalendarAlt,
-  FaUserMd,
-  FaUser,
   FaFileAlt,
   FaSignOutAlt,
-  FaChartBar,
 } from "react-icons/fa";
 import styles from "@/app/assets/styles/dashDoctor/dash.module.scss";
 
@@ -15,46 +12,30 @@ export default function PatientDashboard() {
   interface Appointment {
     id: number;
     doctor: {
-      name: string;
+      nameDoctor: string;
     };
     date: string;
-    type: string;
+    status: string;
   }
 
   interface Exam {
     id: number;
     doctor: {
-      name: string;
+      nameDoctor: string;
     };
     date: string;
     type: string;
   }
 
-  interface Stats {
-    totalAppointments: number;
-    totalExams: number;
-    upcomingAppointments: number;
-    completedExams: number;
-  }
-
-  const [activeView, setActiveView] = useState<
-    "viewAppointments" | "bookAppointment" | "viewExams" | "profile" | "stats"
-  >("viewAppointments");
+  const [activeView, setActiveView] = useState<"viewAppointments" | "viewExams">("viewAppointments");
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [exams, setExams] = useState<Exam[]>([]);
-  const [profile, setProfile] = useState<any>(null);
-  const [stats, setStats] = useState<Stats | null>(null);
-  const [isAnimating, setIsAnimating] = useState(false);
-  const [loading, setLoading] = useState(true); // Added loading state
+  const [isAnimatingOut, setIsAnimatingOut] = useState(false); // Controle de animação de saída
+  const [loading, setLoading] = useState(true);
 
-  // Fetch Appointments and Exams
   useEffect(() => {
     const fetchAppointmentsAndExams = async () => {
       try {
-        if (typeof window === "undefined") {
-          return;
-        }
-
         const token = localStorage.getItem("token");
         if (!token) {
           throw new Error("No token found");
@@ -76,7 +57,6 @@ export default function PatientDashboard() {
           },
         });
 
-
         if (!response.ok || !examResponse.ok) {
           throw new Error("Failed to fetch data");
         }
@@ -86,38 +66,22 @@ export default function PatientDashboard() {
 
         setAppointments(appointmentData);
         setExams(examData);
-
-        // Fetch stats if needed
-        const statsResponse = await fetch("http://localhost:8080/admin/stats", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (statsResponse.ok) {
-          const statsData = await statsResponse.json();
-          setStats(statsData);
-        }
-        setLoading(false); // Loading completed
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
-        setLoading(false); // Set loading to false even if there's an error
+        setLoading(false);
       }
     };
 
     fetchAppointmentsAndExams();
   }, []);
 
-  const handleViewChange = (
-    view: "viewAppointments" | "bookAppointment" | "viewExams"
-  ) => {
-    setIsAnimating(true);
+  const handleViewChange = (view: "viewAppointments" | "viewExams") => {
+    setIsAnimatingOut(true); // Iniciar animação de saída
     setTimeout(() => {
-      setActiveView(view);
-      setIsAnimating(false);
-    }, 300);
+      setActiveView(view); // Alterar a tabela após a animação de saída
+      setIsAnimatingOut(false); // Iniciar animação de entrada
+    }, 300); // Duração da animação
   };
 
   return (
@@ -129,136 +93,70 @@ export default function PatientDashboard() {
           <p>Carregando...</p>
         ) : (
           <div className={styles.tablesContainer}>
-            {activeView === "viewAppointments" && (
-              <div
-                className={`${styles.tableWrapper} ${
-                  isAnimating ? styles.fadeOut : styles.fadeIn
-                }`}
-              >
-                <h2>Minhas Consultas</h2>
-                <table className={styles.logsTable}>
-                  <thead>
-                    <tr>
-                      <th>Médico</th>
-                      <th>Data</th>
-                      <th>Tipo</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {appointments.length > 0 ? (
-                      appointments.map((appointment) => (
-                        <tr key={appointment.id}>
-                          <td>{appointment.doctorId}</td>
-                          <td>{new Date(appointment.date).toLocaleString()}</td>
-                          <td>{appointment.type}</td>
-                        </tr>
-                      ))
-                    ) : (
+            <div
+              className={`${styles.tableWrapper} ${
+                isAnimatingOut ? styles.fadeOut : styles.fadeIn
+              }`}
+            >
+              {activeView === "viewAppointments" && (
+                <>
+                  <h2>Minhas Consultas</h2>
+                  <table className={styles.logsTable}>
+                    <thead>
                       <tr>
-                        <td colSpan={3}>Nenhuma consulta marcada</td>
+                        <th>Médico</th>
+                        <th>Data</th>
+                        <th>Status</th>
                       </tr>
-                    )}
-                  </tbody>
-                </table>
-              </div>
-            )}
-            {activeView === "viewExams" && (
-              <div
-                className={`${styles.tableWrapper} ${
-                  isAnimating ? styles.fadeOut : styles.fadeIn
-                }`}
-              >
-                <h2>Meus Exames</h2>
-                <table className={styles.logsTable}>
-                  <thead>
-                    <tr>
-                      <th>Exame</th>
-                      <th>Data</th>
-                      <th>Médico</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {exams.length > 0 ? (
-                      exams.map((exam) => (
-                        <tr key={exam.id}>
-                          <td>{exam.type}</td>
-                          <td>{new Date(exam.date).toLocaleString()}</td>
-                          <td>{exam.doctorId}</td>
+                    </thead>
+                    <tbody>
+                      {appointments.length > 0 ? (
+                        appointments.map((appointment) => (
+                          <tr key={appointment.id}>
+                            <td>{appointment.doctor.nameDoctor}</td>
+                            <td>{new Date(appointment.date).toLocaleString()}</td>
+                            <td>{appointment.status}</td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td colSpan={3}>Nenhuma consulta marcada</td>
                         </tr>
-                      ))
-                    ) : (
+                      )}
+                    </tbody>
+                  </table>
+                </>
+              )}
+              {activeView === "viewExams" && (
+                <>
+                  <h2>Meus Exames</h2>
+                  <table className={styles.logsTable}>
+                    <thead>
                       <tr>
-                        <td colSpan={3}>Nenhum exame marcado</td>
+                        <th>Exame</th>
+                        <th>Data</th>
+                        <th>Médico</th>
                       </tr>
-                    )}
-                  </tbody>
-                </table>
-              </div>
-            )}
-            {activeView === "bookAppointment" && (
-              <div className={`${styles.formWrapper} ${isAnimating ? styles.fadeOut : styles.fadeIn}`}>
-                <h2>Marcar Consulta</h2>
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    console.log("Consulta marcada");
-                  }}
-                >
-                  <label>
-                    Tipo de Consulta:
-                    <select required>
-                      <option value="General">Clínica Geral</option>
-                      <option value="Cardiologist">Cardiologista</option>
-                      <option value="Dermatologist">Dermatologista</option>
-                    </select>
-                  </label>
-                  <label>
-                    Data:
-                    <input type="datetime-local" required />
-                  </label>
-                  <button type="submit">Marcar Consulta</button>
-                </form>
-              </div>
-            )}
-            {activeView === "profile" && profile && (
-              <div
-                className={`${styles.tableWrapper} ${
-                  isAnimating ? styles.fadeOut : styles.fadeIn
-                }`}
-              >
-                <h2>Meu Perfil</h2>
-                <p>
-                  <strong>Nome:</strong> {profile.name}
-                </p>
-                <p>
-                  <strong>Email:</strong> {profile.email}
-                </p>
-                <p>
-                  <strong>Data de Nascimento:</strong> {profile.birthdate}
-                </p>
-              </div>
-            )}
-            {activeView === "stats" && stats && (
-              <div
-                className={`${styles.tableWrapper} ${
-                  isAnimating ? styles.fadeOut : styles.fadeIn
-                }`}
-              >
-                <h2>Estatísticas</h2>
-                <p>
-                  <strong>Total de Consultas:</strong> {stats.totalAppointments}
-                </p>
-                <p>
-                  <strong>Total de Exames:</strong> {stats.totalExams}
-                </p>
-                <p>
-                  <strong>Próximas Consultas:</strong> {stats.upcomingAppointments}
-                </p>
-                <p>
-                  <strong>Exames Concluídos:</strong> {stats.completedExams}
-                </p>
-              </div>
-            )}
+                    </thead>
+                    <tbody>
+                      {exams.length > 0 ? (
+                        exams.map((exam) => (
+                          <tr key={exam.id}>
+                            <td>{exam.type}</td>
+                            <td>{new Date(exam.date).toLocaleString()}</td>
+                            <td>{exam.doctor.nameDoctor}</td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td colSpan={3}>Nenhum exame marcado</td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </>
+              )}
+            </div>
           </div>
         )}
       </div>
@@ -269,9 +167,7 @@ export default function PatientDashboard() {
 function Sidebar({
   setActiveView,
 }: {
-  setActiveView: (
-    view: "viewAppointments" | "bookAppointment" | "viewExams"
-  ) => void;
+  setActiveView: (view: "viewAppointments" | "viewExams") => void;
 }) {
   return (
     <div className={styles.sidebar}>
@@ -285,16 +181,6 @@ function Sidebar({
           >
             <FaCalendarAlt style={{ marginRight: "8px" }} />
             Ver Consultas
-          </button>
-        </li>
-        <li>
-          <button
-            onClick={() => setActiveView("bookAppointment")}
-            className={styles.sidebarButton}
-            aria-label="Marcar Consulta"
-          >
-            <FaUserMd style={{ marginRight: "8px" }} />
-            Marcar Consulta
           </button>
         </li>
         <li>

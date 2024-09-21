@@ -201,6 +201,9 @@
     justify-content: space-between;
     max-width: 600px;
     margin: 0 auto; /* Centralizar */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 1;
+    transform: translateY(0);
   }
   
   .formWrapper h2 {
@@ -259,12 +262,15 @@
   .fadeIn {
     opacity: 1;
     transform: translateY(0);
+    transition: opacity 0.3s ease, transform 0.3s ease;
   }
   
   .fadeOut {
     opacity: 0;
     transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
   }
+  
   
   .tableWrapper::-webkit-scrollbar {
     width: 12px;
