@@ -1,0 +1,33 @@
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  .modalContent {
+    background: white;
+    padding: 10px; /* Reduced padding */
+    border-radius: 8px;
+    max-width: 100px; /* Reduced max-width */
+    width: 100%;
+  }
+  
+  .saveButton,
+  .cancelButton {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .saveButton:hover,
+  .cancelButton:hover {
+    opacity: 0.8;
+  }
