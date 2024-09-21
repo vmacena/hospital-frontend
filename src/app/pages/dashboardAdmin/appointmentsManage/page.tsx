@@ -3,9 +3,9 @@
 import React, { useEffect, useState } from 'react';
 import { FaUsers, FaCalendarAlt, FaStethoscope, FaSignOutAlt, FaArrowLeft } from 'react-icons/fa'; 
 import styles from '@/app/assets/styles/dashAdmin/dash.module.scss'; 
-import tableStyles from '@/app/assets/styles/dashAdmin/table.module.scss'; // Import the table styles
+import tableStyles from '@/app/assets/styles/dashAdmin/table.module.scss';
 import axios from 'axios';
-import AppointmentsTable from '@/app/components/AppointmentsTable'; // Import the AppointmentsTable component
+import AppointmentsTable from '@/app/components/AppointmentsTable'; 
 
 export default function AdminDashboard() {
   return (

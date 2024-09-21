@@ -4,14 +4,11 @@ import React, { useEffect, useState } from "react";
 import {
     FaEdit,
     FaTrashAlt,
-    FaUsers,
-    FaCalendarAlt,
-    FaStethoscope,
     FaSignOutAlt,
     FaArrowLeft,
 } from "react-icons/fa";
 import styles from "@/app/assets/styles/dashAdmin/dash.module.scss";
-import tableStyles from "@/app/assets/styles/dashDoctor/dash.module.scss";
+import tableStyles from "@/app/assets/styles/dashAdmin/table.module.scss";
 import modalStyles from "@/app/assets/styles/components/Modal.module.scss";
 import { fetchExams, handleEditExam, handleSaveEdit, handleCancelExam, Exam } from "./examsService";
 
@@ -27,10 +24,12 @@ export default function ExamsManage() {
     return (
         <div className={styles.containerCenter}>
             <Sidebar />
+            
             <div className={styles.panel}>
+            <h2 className={tableStyles.h2}>Gerenciar Exames</h2>
                 <div className={tableStyles.tablesContainer}>
                     <div className={tableStyles.tableWrapper}>
-                        <h2 className={tableStyles.h2}>Exams Table</h2>
+                        
                         {loading ? (
                             <p>Loading...</p>
                         ) : (
@@ -77,6 +76,7 @@ export default function ExamsManage() {
                                     Type:
                                     <input
                                         type="text"
+                                        className={modalStyles.input}
                                         value={editingExam.type}
                                         onChange={(e) =>
                                             setEditingExam({ ...editingExam, type: e.target.value })
@@ -87,6 +87,7 @@ export default function ExamsManage() {
                                     Date:
                                     <input
                                         type="datetime-local"
+                                        className={modalStyles.input}
                                         value={new Date(editingExam.date).toISOString().slice(0, 16)}
                                         onChange={(e) =>
                                             setEditingExam({ ...editingExam, date: new Date(e.target.value).toISOString() })
@@ -97,17 +98,18 @@ export default function ExamsManage() {
                                     Result:
                                     <input
                                         type="text"
+                                        className={modalStyles.input}
                                         value={editingExam.result || ""}
                                         onChange={(e) =>
                                             setEditingExam({ ...editingExam, result: e.target.value })
                                         }
                                     />
                                 </label>
-                                <button type="submit">
+                                <button type="submit" className={modalStyles.button}>
                                     <FaEdit style={{ marginRight: "8px", color: "blue" }} />
                                     Save
                                 </button>
-                                <button type="button" onClick={() => setEditingExam(null)}>
+                                <button type="button" className={modalStyles.button} onClick={() => setEditingExam(null)}>
                                     <FaTrashAlt style={{ marginRight: "8px", color: "red" }} />
                                     Cancel
                                 </button>
