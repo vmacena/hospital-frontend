@@ -63,42 +63,29 @@ export default function PatientDashboard() {
         const response = await fetch("http://localhost:8080/patient/appointments", {
           method: "GET",
           headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            'Content-Type': "application/json",
+            'Authorization': `Bearer ${token}`,
           },
         });
 
         const examResponse = await fetch("http://localhost:8080/patient/exams", {
           method: "GET",
           headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            'Content-Type': "application/json",
+            'Authorization': `Bearer ${token}`,
           },
         });
 
-        const profileId = "123"; // Use actual logic to retrieve patient ID
-        const profileResponse = await fetch(
-          `http://localhost:8080/patient/${profileId}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
 
-        if (!response.ok || !examResponse.ok || !profileResponse.ok) {
+        if (!response.ok || !examResponse.ok) {
           throw new Error("Failed to fetch data");
         }
 
         const appointmentData = await response.json();
         const examData = await examResponse.json();
-        const profileData = await profileResponse.json();
 
         setAppointments(appointmentData);
         setExams(examData);
-        setProfile(profileData);
 
         // Fetch stats if needed
         const statsResponse = await fetch("http://localhost:8080/admin/stats", {
@@ -124,7 +111,7 @@ export default function PatientDashboard() {
   }, []);
 
   const handleViewChange = (
-    view: "viewAppointments" | "bookAppointment" | "viewExams" | "profile" | "stats"
+    view: "viewAppointments" | "bookAppointment" | "viewExams"
   ) => {
     setIsAnimating(true);
     setTimeout(() => {
@@ -161,7 +148,7 @@ export default function PatientDashboard() {
                     {appointments.length > 0 ? (
                       appointments.map((appointment) => (
                         <tr key={appointment.id}>
-                          <td>{appointment.doctor.name}</td>
+                          <td>{appointment.doctorId}</td>
                           <td>{new Date(appointment.date).toLocaleString()}</td>
                           <td>{appointment.type}</td>
                         </tr>
@@ -196,7 +183,7 @@ export default function PatientDashboard() {
                         <tr key={exam.id}>
                           <td>{exam.type}</td>
                           <td>{new Date(exam.date).toLocaleString()}</td>
-                          <td>{exam.doctor.name}</td>
+                          <td>{exam.doctorId}</td>
                         </tr>
                       ))
                     ) : (
@@ -283,7 +270,7 @@ function Sidebar({
   setActiveView,
 }: {
   setActiveView: (
-    view: "viewAppointments" | "bookAppointment" | "viewExams" | "profile" | "stats"
+    view: "viewAppointments" | "bookAppointment" | "viewExams"
   ) => void;
 }) {
   return (
