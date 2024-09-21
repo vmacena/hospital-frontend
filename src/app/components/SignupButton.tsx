@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter } from 'next/navigation';
-import styles from '../page.module.scss';
+import styles from '@/app/page.module.scss';
 
 export default function SignupButton() {
   const router = useRouter();
@@ -11,6 +11,9 @@ export default function SignupButton() {
   };
 
   return (
-    <button onClick={handleSignupClick} className={styles.signupButton}>Cadastrar</button>
+    <button 
+        onClick={handleSignupClick} 
+        className={styles.button}>Cadastrar
+    </button>
   );
 }
