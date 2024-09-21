@@ -54,6 +54,41 @@
     font-size: 50px; 
     margin-bottom: 10px; 
   }
+
+  .sloganContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .sloganText {
+    flex: 1;
+    text-align: left;
+  }
+  
+  .slogan {
+    font-size: 2.5rem;
+    color: var(--green-300);
+    margin-bottom: 10px;
+    margin-left: 8rem;
+  }
+  
+  .sloganDescription {
+    font-size: 1.25rem;
+    color: var(--color-primary);
+    margin-left: 8rem;
+  }
+  
+  .sloganImage {
+    flex: 1;
+    text-align: right;
+  }
+  
+  .sloganImage img {
+    max-width: 30rem;
+    height: auto;
+  }
   
   .body {
     margin: 0;

@@ -26,7 +26,7 @@ export default function ExamsManage() {
             <Sidebar />
             
             <div className={styles.panel}>
-            <h2 className={tableStyles.h2}>Gerenciar Exames</h2>
+            <h2 className={tableStyles.h2}>GERENCIAR EXAMES</h2>
                 <div className={tableStyles.tablesContainer}>
                     <div className={tableStyles.tableWrapper}>
                         

@@ -37,7 +37,7 @@ function Sidebar() {
           </a>
         </li>
         <li>
-          <a href="/manage-doctors">
+          <a href="dashboardAdmin/doctorsManage">
             <FaStethoscope style={{ marginRight: '8px' }} />
             Gerenciar Médicos
           </a>
