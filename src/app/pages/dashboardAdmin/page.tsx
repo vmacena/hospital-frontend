@@ -25,9 +25,15 @@ function Sidebar() {
           </a>
         </li>
         <li>
-          <a href="/manage-appointments">
+          <a href="dashboardAdmin/appointmentsManage">
             <FaCalendarAlt style={{ marginRight: '8px' }} />
             Gerenciar Consultas
+          </a>
+        </li>
+        <li>
+          <a href="dashboardAdmin/examsManage">
+            <FaCalendarAlt style={{ marginRight: '8px' }} />
+            Gerenciar Exames
           </a>
         </li>
         <li>
