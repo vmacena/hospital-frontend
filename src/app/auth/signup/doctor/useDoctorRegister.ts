@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import endpoints from '../../endpoints.json';
 import 'react-toastify/dist/ReactToastify.css';
 
 interface DoctorData {
@@ -17,7 +18,7 @@ export const useDoctorRegister = () => {
     setError(null);
 
     try {
-      const response = await fetch('http://localhost:8080/doctor/register', {
+      const response = await fetch(endpoints.doctor.register, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

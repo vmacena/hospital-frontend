@@ -6,6 +6,7 @@ import modalStyles from '@/app/assets/styles/signup/PatientModal.module.scss';
 import axios from 'axios';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 import Modal from 'react-modal';
+import { getEndpoint, endpointsConfig } from '@/app/auth/endpoints';
 
 interface Appointment {
   id: number;
@@ -13,10 +14,10 @@ interface Appointment {
   doctorId: number;
   date: string;
   status: string;
-  patient: {
+  patient?: {
     namePatient: string;
   };
-  doctor: {
+  doctor?: {
     nameDoctor: string;
   };
 }
@@ -31,10 +32,11 @@ const AppointmentsTable: React.FC = () => {
   const [newStatus, setNewStatus] = useState('');
 
   useEffect(() => {
+
     const fetchAppointments = async () => {
       const token = localStorage.getItem("token");
       try {
-        const response = await axios.get('http://localhost:8080/admin/appointments', {
+        const response = await axios.get(getEndpoint(endpointsConfig.admin.appointments.findAll), {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -76,7 +78,7 @@ const AppointmentsTable: React.FC = () => {
 
     const token = localStorage.getItem("token");
     try {
-      const response = await axios.put(`http://localhost:8080/admin/appointments/${selectedAppointment.id}`, {
+      const response = await axios.put(getEndpoint(endpointsConfig.admin.appointments.update, { id: selectedAppointment.id }), {
         date: newDate,
         status: newStatus
       }, {
@@ -100,8 +102,8 @@ const AppointmentsTable: React.FC = () => {
   const handleDelete = async (id: number) => {
     const token = localStorage.getItem("token");
     try {
-      await axios.delete(`http://localhost:8080/admin/appointments/${id}`, {
-        headers: {
+      await axios.delete(getEndpoint(endpointsConfig.admin.appointments.delete, { id }), {
+ headers: {
           Authorization: `Bearer ${token}`
         }
       });
@@ -123,9 +125,9 @@ const AppointmentsTable: React.FC = () => {
           <thead>
             <tr>
               <th>ID</th>
-              <th>Paciente</th>
-              <th>Doutor</th>
-              <th>Data</th>
+              <th>Patient Name</th>
+              <th>Doctor Name</th>
+              <th>Date</th>
               <th>Status</th>
               <th>Ações</th>
             </tr>
@@ -134,8 +136,8 @@ const AppointmentsTable: React.FC = () => {
             {appointments.map(appointment => (
               <tr key={appointment.id}>
                 <td>{appointment.id}</td>
-                <td>{appointment.patient.namePatient}</td>
-                <td>{appointment.doctor.nameDoctor}</td>
+                <td>{appointment.patient?.namePatient || 'N/A'}</td>
+                <td>{appointment.doctor?.nameDoctor || 'N/A'}</td>
                 <td>{new Date(appointment.date).toLocaleString()}</td>
                 <td>{appointment.status}</td>
                 <td>
@@ -159,11 +161,11 @@ const AppointmentsTable: React.FC = () => {
         overlayClassName={modalStyles.modalOverlay}
         contentLabel="Edit Appointment"
       >
-        <h2>Gerenciar Consultas</h2>
+        <h2>Edit Appointment</h2>
         {selectedAppointment && (
           <div>
             <label>
-              Data:
+              Date:
               <input
                 type="datetime-local"
                 className={modalStyles.input}
@@ -180,8 +182,8 @@ const AppointmentsTable: React.FC = () => {
                 onChange={(e) => setNewStatus(e.target.value)}
               />
             </label>
-            <button className={modalStyles.button} onClick={handleEdit}>Salvar</button>
-            <button className={modalStyles.button} onClick={closeModal}>Cancelar</button>
+            <button className={modalStyles.button} onClick={handleEdit}>Save</button>
+            <button className={modalStyles.button} onClick={closeModal}>Cancel</button>
           </div>
         )}
       </Modal>

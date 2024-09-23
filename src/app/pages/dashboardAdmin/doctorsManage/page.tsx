@@ -5,6 +5,7 @@ import { FaSignOutAlt, FaArrowLeft } from 'react-icons/fa';
 import styles from '@/app/assets/styles/dashAdmin/dash.module.scss';
 import tableStyles from '@/app/assets/styles/dashAdmin/table.module.scss';
 import axios from 'axios';
+import { getEndpoint, endpointsConfig } from '@/app/auth/endpoints';
 
 interface Doctor {
   nameDoctor: string;
@@ -19,7 +20,7 @@ export default function DoctorsTable() {
     const fetchDoctors = async () => {
       const token = localStorage.getItem("token");
       try {
-        const response = await axios.get('http://localhost:8080/admin/doctors', {
+        const response = await axios.get(getEndpoint(endpointsConfig.admin.doctors.findAll), {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -39,10 +40,9 @@ export default function DoctorsTable() {
     <div className={styles.containerCenter}>
       <Sidebar />
       <div className={styles.panel}>
-      <h2 className={tableStyles.h2}>DOUTORES CADASTRADOS NO SISTEMA</h2>
+        <h2 className={tableStyles.h2}>DOUTORES CADASTRADOS NO SISTEMA</h2>
         <div className={tableStyles.tablesContainer}>
           <div className={tableStyles.tableWrapper}>
-           
             {loading ? (
               <p>Loading...</p>
             ) : (
