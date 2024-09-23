@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import styles from '../page.module.scss';
 import Loading from 'react-loading';
-import { useAdminAuth } from '../auth/admin/login/useAdminAuth';
+import { useAdminAuth } from '../hooks/admin/login/useAdminAuth';
 
 export default function AdminLoginForm() {
     const [isLoggingIn, setIsLoggingIn] = useState(false);
