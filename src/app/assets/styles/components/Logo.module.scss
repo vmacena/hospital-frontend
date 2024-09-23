@@ -1,0 +1,14 @@
+.logo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo img {
+    max-width: 50px; /* Adjust size as needed */
+    margin-right: 10px;
+  }
+  
+  .logo h1 {
+    font-size: 1.5rem;
+    color: var(--color-primary);
+  }
