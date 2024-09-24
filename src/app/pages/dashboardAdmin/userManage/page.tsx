@@ -3,7 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import { FaUserEdit, FaUserTimes, FaSignOutAlt, FaArrowLeft } from 'react-icons/fa';
 import styles from '@/app/assets/styles/dashAdmin/dash.module.scss';
-import tableStyles from '@/app/assets/styles/dashAdmin/table.module.scss'; // Importando os estilos da tabela
+import tableStyles from '@/app/assets/styles/dashAdmin/table.module.scss';
+import { endpointsConfig } from '@/app/hooks/endpoints';
 
 interface Patient {
     id: number;
@@ -50,7 +51,7 @@ export default function UserManagement() {
                     throw new Error('No token found');
                 }
 
-                const response = await fetch('http://localhost:8080/patients', {
+                const response = await fetch(endpointsConfig.patient.getData, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',

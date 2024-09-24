@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { FaCalendarAlt, FaUser, FaClipboardList, FaSignOutAlt } from 'react-icons/fa'; 
 import styles from '@/app/assets/styles/dashDoctor/dash.module.scss'; 
+import { endpointsConfig } from '@/app/hooks/endpoints';
 
 export default function DoctorDashboard() {
   interface Appointment {
@@ -36,7 +37,7 @@ export default function DoctorDashboard() {
           throw new Error('No token found');
         }
 
-        const response = await fetch('http://localhost:8080/doctor/appointments-exams', {
+        const response = await fetch(endpointsConfig.doctor.findAppointmentsAndExams, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

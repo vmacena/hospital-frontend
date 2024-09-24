@@ -11,7 +11,7 @@ export const usePatientAuth = () => {
         event.preventDefault();
 
         try {
-            console.log('Enviando número SUS:', susNumber);
+            console.log('SUS Number Sending:', susNumber);
 
             const response = await fetch(endpoints.patient.login, {
                 method: 'POST',

@@ -1,4 +1,4 @@
-// Define the Exam type directly in this file
+import { endpointsConfig } from "@/app/hooks/endpoints";
 export interface Exam {
     id: number;
     patientId: number;
@@ -21,7 +21,7 @@ export interface Exam {
         throw new Error("No token found");
       }
   
-      const response = await fetch("http://localhost:8080/admin/exams", {
+      const response = await fetch(endpointsConfig.admin.exams.findAll, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -61,7 +61,7 @@ export interface Exam {
     }
   
     try {
-      const response = await fetch(`http://localhost:8080/admin/exams/${editingExam.id}`, {
+      const response = await fetch(`${endpointsConfig.admin.exams.update}/${editingExam.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -95,7 +95,7 @@ export interface Exam {
     }
   
     try {
-      const response = await fetch(`http://localhost:8080/admin/exams/${id}`, {
+      const response = await fetch(`${endpointsConfig.admin.exams.delete}/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

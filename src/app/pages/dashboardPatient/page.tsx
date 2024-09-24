@@ -7,6 +7,7 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 import styles from "@/app/assets/styles/dashDoctor/dash.module.scss";
+import { endpointsConfig } from "@/app/hooks/endpoints";
 
 export default function PatientDashboard() {
   interface Appointment {
@@ -41,7 +42,7 @@ export default function PatientDashboard() {
           throw new Error("No token found");
         }
 
-        const response = await fetch("http://localhost:8080/patient/appointments", {
+        const response = await fetch(endpointsConfig.patient.appointments.findAll, {
           method: "GET",
           headers: {
             'Content-Type': "application/json",
@@ -49,7 +50,7 @@ export default function PatientDashboard() {
           },
         });
 
-        const examResponse = await fetch("http://localhost:8080/patient/exams", {
+        const examResponse = await fetch(endpointsConfig.patient.exams.findAll, {
           method: "GET",
           headers: {
             'Content-Type': "application/json",
