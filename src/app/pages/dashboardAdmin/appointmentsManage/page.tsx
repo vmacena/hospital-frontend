@@ -7,6 +7,7 @@ import tableStyles from '@/app/assets/styles/dashAdmin/table.module.scss';
 import axios from 'axios';
 import AppointmentsTable from '@/app/components/AppointmentsTable'; 
 import ScheduleAppointmentModal from '@/app/components/ScheduleModal'; // Ajuste o caminho conforme necessário
+import ScheduleExamModal from '@/app/components/ScheduleExamModal';
 
 export default function AdminDashboard() {
   return (
@@ -42,7 +43,7 @@ function Sidebar() {
         <li>
           <a href="#" onClick={openModal}>
             <FaCalendarAlt style={{ marginRight: '8px' }} />
-            Agendar Consulta
+            Agendar Exame
           </a>
         </li>
       </ul>
@@ -52,7 +53,7 @@ function Sidebar() {
           Sair
         </a>
       </div>
-      {isModalOpen && <ScheduleAppointmentModal onClose={closeModal} />}
+      {isModalOpen && <ScheduleExamModal onClose={closeModal} />}
     </div>
   );
 }

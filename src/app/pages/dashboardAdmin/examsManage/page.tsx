@@ -6,24 +6,35 @@ import {
     FaTrashAlt,
     FaSignOutAlt,
     FaArrowLeft,
+    FaCalendarAlt,
 } from "react-icons/fa";
 import styles from "@/app/assets/styles/dashAdmin/dash.module.scss";
 import tableStyles from "@/app/assets/styles/dashAdmin/table.module.scss";
 import modalStyles from "@/app/assets/styles/components/Modal.module.scss";
 import { fetchExams, handleEditExam, handleSaveEdit, handleCancelExam, Exam } from "./examsService";
+import ScheduleExamModal from '@/app/components/ScheduleExamModal'; // Ajuste o caminho conforme necessário
 
 export default function ExamsManage() {
     const [loading, setLoading] = useState(true);
     const [exams, setExams] = useState<Exam[]>([]);
     const [editingExam, setEditingExam] = useState<Exam | null>(null);
+    const [isExamModalOpen, setIsExamModalOpen] = useState(false);
 
     useEffect(() => {
         fetchExams(setExams, setLoading);
     }, []);
 
+    const openExamModal = () => {
+        setIsExamModalOpen(true);
+    };
+
+    const closeExamModal = () => {
+        setIsExamModalOpen(false);
+    };
+
     return (
         <div className={styles.containerCenter}>
-            <Sidebar />
+            <Sidebar openExamModal={openExamModal} />
             
             <div className={styles.panel}>
             <h2 className={tableStyles.h2}>GERENCIAR EXAMES</h2>
@@ -117,12 +128,13 @@ export default function ExamsManage() {
                         </div>
                     </div>
                 )}
+                {isExamModalOpen && <ScheduleExamModal onClose={closeExamModal} />}
             </div>
         </div>
     );
 }
 
-function Sidebar() {
+function Sidebar({ openExamModal }: { openExamModal: () => void }) {
     return (
         <div className={styles.sidebar}>
             <ul>
@@ -130,6 +142,12 @@ function Sidebar() {
                     <a href="/pages/dashboardAdmin">
                         <FaArrowLeft style={{ marginRight: '8px' }} />
                         Voltar
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onClick={openExamModal}>
+                        <FaCalendarAlt style={{ marginRight: '8px' }} />
+                        Agendar Exame
                     </a>
                 </li>
             </ul>
