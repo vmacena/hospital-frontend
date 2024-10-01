@@ -62,10 +62,18 @@
     margin-top: 20px;
   }
   
-  .sloganText {
+  .sloganText, .sloganImage {
     flex: 1;
     text-align: left;
-  }
+    transition: all 4s ease-in-out;
+    opacity: 0; /* Estado inicial invisível */
+    transform: translateY(20px); /* Estado inicial fora da tela */
+}
+
+.sloganText.visible, .sloganImage.visible {
+    opacity: 1; /* Tornar visível */
+    transform: translateY(0); /* Posição final */
+}
   
   .slogan {
     font-size: 2.5rem;

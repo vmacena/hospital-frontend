@@ -6,12 +6,24 @@ import { Card, Container, Row, Col } from 'react-bootstrap';
 import { FaUserMd, FaAmbulance, FaStethoscope } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from './page.module.scss';
+import { useEffect } from 'react';
 
-export default function Page() {
+const Page = () => {
+    useEffect(() => {
+        const sloganText = document.querySelector(`.${styles.sloganText}`);
+        const sloganImage = document.querySelector(`.${styles.sloganImage}`);
+        if (sloganText) {
+            sloganText.classList.add(styles.visible);
+        }
+        if (sloganImage) {
+            sloganImage.classList.add(styles.visible);
+        }
+    }, []);
+
     return (
         <>
             <section className={styles.backgroundSection}>
-                <Topbar />
+                {/*<Topbar />*/}
                 <Navbar />
                 <div className={styles.sloganContainer}>
                     <div className={styles.sloganText}>
@@ -23,7 +35,7 @@ export default function Page() {
                     </div>
                 </div>
             </section>
-            <section className={styles.secondSection}>
+            {/*<section className={styles.secondSection}>
                 <Container>
                     <Row>
                         <Col md={4}>
@@ -55,7 +67,9 @@ export default function Page() {
                         </Col>
                     </Row>
                 </Container>
-            </section>
+            </section>*/}
         </>
     );
-}
+};
+
+export default Page;
