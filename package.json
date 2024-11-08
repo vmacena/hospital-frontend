@@ -30,7 +30,8 @@
     "react-loading": "^2.0.3",
     "react-modal": "^3.16.1",
     "react-toastify": "^10.0.5",
-    "sass": "^1.78.0"
+    "sass": "^1.78.0",
+    "yarn": "^1.22.22"
   },
   "devDependencies": {
     "@types/node": "^20",
