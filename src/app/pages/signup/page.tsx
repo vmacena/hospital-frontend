@@ -11,6 +11,48 @@ import { useDoctorRegister } from '@/app/hooks/signup/doctor/useDoctorRegister';
 import { usePatientRegister } from '@/app/hooks/signup/patient/usePatientRegister';
 import PatientModal from '@/app/components/PatientModal';
 
+interface SearchModalProps {
+    onClose: () => void;
+    onSelect: (url: string) => void;
+    searchQuery: string;
+    setSearchQuery: (query: string) => void;
+    searchResults: string[];
+    fetchPictures: (query: string) => void;
+}
+
+const SearchModal: React.FC<SearchModalProps> = ({ onClose, onSelect, searchQuery, setSearchQuery, searchResults, fetchPictures }) => {
+    return (
+        <div className={styles.modal}>
+            <div className={styles.modalContent}>
+                <h2>Buscar Foto</h2>
+                <input
+                    type="text"
+                    placeholder="Digite para buscar..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className={styles.input}
+                />
+                <button onClick={() => fetchPictures(searchQuery)} className={styles.button}>Buscar</button>
+                <div className={styles.imageGrid}>
+                    {searchResults.map((url, index) => (
+                        <img
+                            key={index}
+                            src={url}
+                            alt="Search Result"
+                            style={{ width: '100px', height: '100px', objectFit: 'cover', cursor: 'pointer' }}
+                            onClick={() => {
+                                onSelect(url);
+                                onClose();
+                            }}
+                        />
+                    ))}
+                </div>
+                <button onClick={onClose} className={styles.button}>Fechar</button>
+            </div>
+        </div>
+    );
+};
+
 export default function Signup() {
     const [patientName, setPatientName] = useState("");
     const [patientEmail, setPatientEmail] = useState("");
@@ -23,12 +65,20 @@ export default function Signup() {
     const [patientComplement, setPatientComplement] = useState("");
     const [patientPictureUrl, setPatientPictureUrl] = useState("");
     const [patientPictureFile, setPatientPictureFile] = useState<File | null>(null);
+    const [patientPictureOption, setPatientPictureOption] = useState("upload");
+    const [patientSearchQuery, setPatientSearchQuery] = useState("");
+    const [patientSearchResults, setPatientSearchResults] = useState<string[]>([]);
+    const [isPatientModalOpen, setIsPatientModalOpen] = useState(false);
 
     const [doctorName, setDoctorName] = useState("");
     const [doctorCrm, setDoctorCrm] = useState("");
     const [doctorSpecialty, setDoctorSpecialty] = useState("");
     const [doctorPictureUrl, setDoctorPictureUrl] = useState("");
     const [doctorPictureFile, setDoctorPictureFile] = useState<File | null>(null);
+    const [doctorPictureOption, setDoctorPictureOption] = useState("upload");
+    const [doctorSearchQuery, setDoctorSearchQuery] = useState("");
+    const [doctorSearchResults, setDoctorSearchResults] = useState<string[]>([]);
+    const [isDoctorModalOpen, setIsDoctorModalOpen] = useState(false);
 
     interface PatientInfo {
         namePatient: string;
@@ -94,14 +144,24 @@ export default function Signup() {
         setPatientCity(data.localidade);
     };
 
-    const fetchPictureUrl = async () => {
-        const response = await fetch('https://api.pexels.com/v1/search?query=person', {
+    const fetchPatientPictures = async (query: string) => {
+        const response = await fetch(`https://api.pexels.com/v1/search?query=${query}`, {
             headers: {
                 Authorization: 'YOUR_PEXELS_API_KEY'
             }
         });
         const data = await response.json();
-        setPatientPictureUrl(data.photos[0].src.medium);
+        setPatientSearchResults(data.photos.map((photo: any) => photo.src.medium));
+    };
+
+    const fetchDoctorPictures = async (query: string) => {
+        const response = await fetch(`https://api.pexels.com/v1/search?query=${query}`, {
+            headers: {
+                Authorization: 'YOUR_PEXELS_API_KEY'
+            }
+        });
+        const data = await response.json();
+        setDoctorSearchResults(data.photos.map((photo: any) => photo.src.medium));
     };
 
     useEffect(() => {
@@ -111,8 +171,16 @@ export default function Signup() {
     }, [patientCep]);
 
     useEffect(() => {
-        fetchPictureUrl();
-    }, []);
+        if (patientPictureOption === "api" && patientSearchQuery) {
+            fetchPatientPictures(patientSearchQuery);
+        }
+    }, [patientPictureOption, patientSearchQuery]);
+
+    useEffect(() => {
+        if (doctorPictureOption === "api" && doctorSearchQuery) {
+            fetchDoctorPictures(doctorSearchQuery);
+        }
+    }, [doctorPictureOption, doctorSearchQuery]);
 
     const handlePatientPictureUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
@@ -229,13 +297,29 @@ export default function Signup() {
                             onChange={(e) => setPatientComplement(e.target.value)}
                         />
 
-                        <input
-                            type="file"
-                            name="picture"
-                            accept="image/*"
+                        <select
+                            value={patientPictureOption}
+                            onChange={(e) => {
+                                setPatientPictureOption(e.target.value);
+                                if (e.target.value === "api") {
+                                    setIsPatientModalOpen(true);
+                                }
+                            }}
                             className={styles.input}
-                            onChange={handlePatientPictureUpload}
-                        />
+                        >
+                            <option value="upload">Upload de Foto</option>
+                            <option value="api">Buscar na API</option>
+                        </select>
+
+                        {patientPictureOption === "upload" && (
+                            <input
+                                type="file"
+                                name="picture"
+                                accept="image/*"
+                                className={styles.input}
+                                onChange={handlePatientPictureUpload}
+                            />
+                        )}
 
                         {patientPictureUrl && (
                             <img src={patientPictureUrl} alt="Patient" style={{ width: '100px', height: '100px', objectFit: 'cover' }} />
@@ -285,13 +369,29 @@ export default function Signup() {
                             onChange={(e) => setDoctorSpecialty(e.target.value)}
                         />
 
-                        <input
-                            type="file"
-                            name="picture"
-                            accept="image/*"
+                        <select
+                            value={doctorPictureOption}
+                            onChange={(e) => {
+                                setDoctorPictureOption(e.target.value);
+                                if (e.target.value === "api") {
+                                    setIsDoctorModalOpen(true);
+                                }
+                            }}
                             className={styles.input}
-                            onChange={handleDoctorPictureUpload}
-                        />
+                        >
+                            <option value="upload">Upload de Foto</option>
+                            <option value="api">Buscar na API</option>
+                        </select>
+
+                        {doctorPictureOption === "upload" && (
+                            <input
+                                type="file"
+                                name="picture"
+                                accept="image/*"
+                                className={styles.input}
+                                onChange={handleDoctorPictureUpload}
+                            />
+                        )}
 
                         {doctorPictureUrl && (
                             <img src={doctorPictureUrl} alt="Doctor" style={{ width: '100px', height: '100px', objectFit: 'cover' }} />
@@ -313,6 +413,32 @@ export default function Signup() {
                 <PatientModal
                     patientInfo={patientInfo}
                     onClose={() => setPatientInfo(null)}
+                />
+            )}
+            {isPatientModalOpen && (
+                <SearchModal
+                    onClose={() => setIsPatientModalOpen(false)}
+                    onSelect={(url) => {
+                        setPatientPictureUrl(url);
+                        setIsPatientModalOpen(false);
+                    }}
+                    searchQuery={patientSearchQuery}
+                    setSearchQuery={setPatientSearchQuery}
+                    searchResults={patientSearchResults}
+                    fetchPictures={fetchPatientPictures}
+                />
+            )}
+            {isDoctorModalOpen && (
+                <SearchModal
+                    onClose={() => setIsDoctorModalOpen(false)}
+                    onSelect={(url) => {
+                        setDoctorPictureUrl(url);
+                        setIsDoctorModalOpen(false);
+                    }}
+                    searchQuery={doctorSearchQuery}
+                    setSearchQuery={setDoctorSearchQuery}
+                    searchResults={doctorSearchResults}
+                    fetchPictures={fetchDoctorPictures}
                 />
             )}
         </>
