@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import styles from '@/app/page.module.scss';
 import { useDoctorAuth } from '@/app/hooks/doctor/useDoctorAuth';
 import LoginForm from '@/app/components/LoginForm';
@@ -10,6 +11,13 @@ import Navbar from '@/app/components/NavBar';
 const DoctorPage: React.FC = () => {
     const { crm, setCrmNumber, handleDoctorSubmit } = useDoctorAuth();
     const [isLoading, setIsLoading] = useState(false);
+    const router = useRouter();
+
+    const handleSubmit = async (event: React.FormEvent) => {
+        setIsLoading(true);
+        await handleDoctorSubmit(event, router); // Passe o router como argumento
+        setIsLoading(false);
+    };
 
     return (
         <>
@@ -20,7 +28,7 @@ const DoctorPage: React.FC = () => {
                     <LoginForm
                         formType="crm"
                         placeholder="Insira seu CRM"
-                        onSubmit={handleDoctorSubmit}
+                        onSubmit={handleSubmit}
                         isLoading={isLoading}
                         inputValue={crm}
                         setInputValue={setCrmNumber}
