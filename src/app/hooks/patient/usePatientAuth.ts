@@ -28,6 +28,7 @@ export const usePatientAuth = () => {
                 console.log('Dados recebidos:', data);
                 if (data.token) {
                     localStorage.setItem('token', data.token);
+                    localStorage.setItem('picture_url', data.patient.picture_url); // Armazenar a URL da foto de perfil
                     router.push('/pages/dashboardPatient');
                     toast.success('Login realizado com sucesso!');
                 } else {

@@ -2,14 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import styles from './../../page.module.scss';
 import logoImg from '/public/logo.png';
-import { useDoctorRegister } from '@/app/hooks/signup/doctor/useDoctorRegister';
-import { usePatientRegister } from '@/app/hooks/signup/patient/usePatientRegister';
 import PatientModal from '@/app/components/PatientModal';
+import { usePatientForm } from '@/app/pages/signup/hooks/usePatientForm';
+import { useDoctorForm } from '@/app/pages/signup/hooks/useDoctorForm';
 
 interface SearchModalProps {
     onClose: () => void;
@@ -22,8 +21,8 @@ interface SearchModalProps {
 
 const SearchModal: React.FC<SearchModalProps> = ({ onClose, onSelect, searchQuery, setSearchQuery, searchResults, fetchPictures }) => {
     return (
-        <div className={styles.modal}>
-            <div className={styles.modalContent}>
+        <div style={modalOverlayStyle}>
+            <div style={modalContentStyle}>
                 <h2>Buscar Foto</h2>
                 <input
                     type="text"
@@ -53,148 +52,88 @@ const SearchModal: React.FC<SearchModalProps> = ({ onClose, onSelect, searchQuer
     );
 };
 
+const modalOverlayStyle: React.CSSProperties = {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1000,
+};
+
+const modalContentStyle: React.CSSProperties = {
+    backgroundColor: 'white',
+    padding: '20px',
+    borderRadius: '8px',
+    width: '80%',
+    maxWidth: '500px',
+    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
+};
+
 export default function Signup() {
-    const [patientName, setPatientName] = useState("");
-    const [patientEmail, setPatientEmail] = useState("");
-    const [patientCep, setPatientCep] = useState("");
-    const [patientStreet, setPatientStreet] = useState("");
-    const [patientDistrict, setPatientDistrict] = useState("");
-    const [patientState, setPatientState] = useState("");
-    const [patientCity, setPatientCity] = useState("");
-    const [patientNumber, setPatientNumber] = useState("");
-    const [patientComplement, setPatientComplement] = useState("");
-    const [patientPictureUrl, setPatientPictureUrl] = useState("");
-    const [patientPictureFile, setPatientPictureFile] = useState<File | null>(null);
-    const [patientPictureOption, setPatientPictureOption] = useState("upload");
-    const [patientSearchQuery, setPatientSearchQuery] = useState("");
-    const [patientSearchResults, setPatientSearchResults] = useState<string[]>([]);
-    const [isPatientModalOpen, setIsPatientModalOpen] = useState(false);
+    const {
+        patientName,
+        setPatientName,
+        patientEmail,
+        setPatientEmail,
+        patientCep,
+        setPatientCep,
+        patientStreet,
+        patientDistrict,
+        patientState,
+        patientCity,
+        patientNumber,
+        setPatientNumber,
+        patientComplement,
+        setPatientComplement,
+        patientPictureUrl,
+        setPatientPictureUrl,
+        patientSearchQuery,
+        setPatientSearchQuery,
+        patientSearchResults,
+        isPatientModalOpen,
+        setIsPatientModalOpen,
+        patientInfo,
+        setPatientInfo,
+        patientLoading,
+        patientError,
+        handlePatientSubmit,
+        fetchPatientPictures,
+    } = usePatientForm();
 
-    const [doctorName, setDoctorName] = useState("");
-    const [doctorCrm, setDoctorCrm] = useState("");
-    const [doctorSpecialty, setDoctorSpecialty] = useState("");
-    const [doctorPictureUrl, setDoctorPictureUrl] = useState("");
-    const [doctorPictureFile, setDoctorPictureFile] = useState<File | null>(null);
-    const [doctorPictureOption, setDoctorPictureOption] = useState("upload");
-    const [doctorSearchQuery, setDoctorSearchQuery] = useState("");
-    const [doctorSearchResults, setDoctorSearchResults] = useState<string[]>([]);
-    const [isDoctorModalOpen, setIsDoctorModalOpen] = useState(false);
-
-    interface PatientInfo {
-        namePatient: string;
-        email: string;
-        susNumber: string;
-    }
-
-    const [patientInfo, setPatientInfo] = useState<PatientInfo | null>(null);
-
-    const { registerPatient, loading: patientLoading, error: patientError, patientInfo: patientData } = usePatientRegister();
-    const { registerDoctor, loading: doctorLoading, error: doctorError } = useDoctorRegister();
-
-    useEffect(() => {
-        if (patientData) {
-            setPatientInfo({
-                susNumber: patientData.susNumber,
-                namePatient: patientData.namePatient,
-                email: patientData.email,
-            });
-        }
-    }, [patientData]);
-
-    const handlePatientSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const address = {
-            cep: patientCep,
-            street: patientStreet,
-            district: patientDistrict,
-            state: patientState,
-            city: patientCity,
-            number: patientNumber,
-            complement: patientComplement,
-        };
-        const patientData = {
-            namePatient: patientName,
-            email: patientEmail,
-            address,
-            picture_url: patientPictureUrl,
-        };
-        await registerPatient(patientData);
-    };
-
-    const handleDoctorSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const doctorData = {
-            crm: doctorCrm,
-            nameDoctor: doctorName,
-            specialty: doctorSpecialty,
-            picture_url: doctorPictureUrl,
-        };
-        if (doctorPictureFile) {
-            // Handle file upload logic here
-        }
-        await registerDoctor(doctorData);
-    };
-
-    const fetchAddress = async (cep: string) => {
-        const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-        const data = await response.json();
-        setPatientStreet(data.logradouro);
-        setPatientDistrict(data.bairro);
-        setPatientState(data.uf);
-        setPatientCity(data.localidade);
-    };
-
-    const fetchPatientPictures = async (query: string) => {
-        const response = await fetch(`https://api.pexels.com/v1/search?query=${query}`, {
-            headers: {
-                Authorization: 'YOUR_PEXELS_API_KEY'
-            }
-        });
-        const data = await response.json();
-        setPatientSearchResults(data.photos.map((photo: any) => photo.src.medium));
-    };
-
-    const fetchDoctorPictures = async (query: string) => {
-        const response = await fetch(`https://api.pexels.com/v1/search?query=${query}`, {
-            headers: {
-                Authorization: 'YOUR_PEXELS_API_KEY'
-            }
-        });
-        const data = await response.json();
-        setDoctorSearchResults(data.photos.map((photo: any) => photo.src.medium));
-    };
-
-    useEffect(() => {
-        if (patientCep.length === 9) {
-            fetchAddress(patientCep);
-        }
-    }, [patientCep]);
-
-    useEffect(() => {
-        if (patientPictureOption === "api" && patientSearchQuery) {
-            fetchPatientPictures(patientSearchQuery);
-        }
-    }, [patientPictureOption, patientSearchQuery]);
-
-    useEffect(() => {
-        if (doctorPictureOption === "api" && doctorSearchQuery) {
-            fetchDoctorPictures(doctorSearchQuery);
-        }
-    }, [doctorPictureOption, doctorSearchQuery]);
-
-    const handlePatientPictureUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            setPatientPictureFile(e.target.files[0]);
-            setPatientPictureUrl(URL.createObjectURL(e.target.files[0]));
-        }
-    };
-
-    const handleDoctorPictureUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            setDoctorPictureFile(e.target.files[0]);
-            setDoctorPictureUrl(URL.createObjectURL(e.target.files[0]));
-        }
-    };
+    const {
+        doctorName,
+        setDoctorName,
+        doctorCrm,
+        setDoctorCrm,
+        doctorSpecialty,
+        setDoctorSpecialty,
+        doctorCep,
+        setDoctorCep,
+        doctorStreet,
+        doctorDistrict,
+        doctorState,
+        doctorCity,
+        doctorNumber,
+        setDoctorNumber,
+        doctorComplement,
+        setDoctorComplement,
+        doctorPictureUrl,
+        setDoctorPictureUrl,
+        doctorSearchQuery,
+        setDoctorSearchQuery,
+        doctorSearchResults,
+        isDoctorModalOpen,
+        setIsDoctorModalOpen,
+        doctorLoading,
+        doctorError,
+        handleDoctorSubmit,
+        fetchDoctorPictures,
+    } = useDoctorForm();
 
     return (
         <>
@@ -297,29 +236,9 @@ export default function Signup() {
                             onChange={(e) => setPatientComplement(e.target.value)}
                         />
 
-                        <select
-                            value={patientPictureOption}
-                            onChange={(e) => {
-                                setPatientPictureOption(e.target.value);
-                                if (e.target.value === "api") {
-                                    setIsPatientModalOpen(true);
-                                }
-                            }}
-                            className={styles.input}
-                        >
-                            <option value="upload">Upload de Foto</option>
-                            <option value="api">Buscar na API</option>
-                        </select>
-
-                        {patientPictureOption === "upload" && (
-                            <input
-                                type="file"
-                                name="picture"
-                                accept="image/*"
-                                className={styles.input}
-                                onChange={handlePatientPictureUpload}
-                            />
-                        )}
+                        <button type="button" className={styles.button} onClick={() => setIsPatientModalOpen(true)}>
+                            Buscar Foto
+                        </button>
 
                         {patientPictureUrl && (
                             <img src={patientPictureUrl} alt="Patient" style={{ width: '100px', height: '100px', objectFit: 'cover' }} />
@@ -369,29 +288,78 @@ export default function Signup() {
                             onChange={(e) => setDoctorSpecialty(e.target.value)}
                         />
 
-                        <select
-                            value={doctorPictureOption}
-                            onChange={(e) => {
-                                setDoctorPictureOption(e.target.value);
-                                if (e.target.value === "api") {
-                                    setIsDoctorModalOpen(true);
-                                }
-                            }}
+                        <input
+                            type="text"
+                            required
+                            name="cep"
+                            placeholder="Digite seu CEP"
                             className={styles.input}
-                        >
-                            <option value="upload">Upload de Foto</option>
-                            <option value="api">Buscar na API</option>
-                        </select>
+                            value={doctorCep}
+                            onChange={(e) => setDoctorCep(e.target.value)}
+                        />
 
-                        {doctorPictureOption === "upload" && (
-                            <input
-                                type="file"
-                                name="picture"
-                                accept="image/*"
-                                className={styles.input}
-                                onChange={handleDoctorPictureUpload}
-                            />
-                        )}
+                        <input
+                            type="text"
+                            required
+                            name="street"
+                            placeholder="Rua"
+                            className={styles.input}
+                            value={doctorStreet}
+                            readOnly
+                        />
+
+                        <input
+                            type="text"
+                            required
+                            name="district"
+                            placeholder="Bairro"
+                            className={styles.input}
+                            value={doctorDistrict}
+                            readOnly
+                        />
+
+                        <input
+                            type="text"
+                            required
+                            name="state"
+                            placeholder="Estado"
+                            className={styles.input}
+                            value={doctorState}
+                            readOnly
+                        />
+
+                        <input
+                            type="text"
+                            required
+                            name="city"
+                            placeholder="Cidade"
+                            className={styles.input}
+                            value={doctorCity}
+                            readOnly
+                        />
+
+                        <input
+                            type="text"
+                            required
+                            name="number"
+                            placeholder="Número"
+                            className={styles.input}
+                            value={doctorNumber}
+                            onChange={(e) => setDoctorNumber(e.target.value)}
+                        />
+
+                        <input
+                            type="text"
+                            name="complement"
+                            placeholder="Complemento"
+                            className={styles.input}
+                            value={doctorComplement}
+                            onChange={(e) => setDoctorComplement(e.target.value)}
+                        />
+
+                        <button type="button" className={styles.button} onClick={() => setIsDoctorModalOpen(true)}>
+                            Buscar Foto
+                        </button>
 
                         {doctorPictureUrl && (
                             <img src={doctorPictureUrl} alt="Doctor" style={{ width: '100px', height: '100px', objectFit: 'cover' }} />

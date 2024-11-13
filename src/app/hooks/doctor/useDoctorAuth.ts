@@ -1,19 +1,19 @@
+"use client";
+
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import endpoints from '../endpoints.json';
 import { toast } from 'react-toastify';
+import { endpointsConfig } from '@/app/hooks/endpoints';
 
 export const useDoctorAuth = () => {
     const [crm, setCrmNumber] = useState<string>('');
-    const router = useRouter();
 
-    const handleDoctorSubmit = async (event: React.FormEvent) => {
+    const handleDoctorSubmit = async (event: React.FormEvent, router: any) => {
         event.preventDefault();
 
         try {
             console.log('Enviando número CRM:', crm);
 
-            const response = await fetch(endpoints.doctor.login, {
+            const response = await fetch(endpointsConfig.doctor.login, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -28,19 +28,20 @@ export const useDoctorAuth = () => {
                 console.log('Dados recebidos:', data);
                 if (data.token) {
                     localStorage.setItem('token', data.token);
-                    router.push('/pages/dashboardDoctor'); // Redireciona para o dashboard do médico
+                    if (data.doctor && data.doctor.picture_url) {
+                        localStorage.setItem('picture_url', data.doctor.picture_url); // Armazenar a URL da foto de perfil
+                    }
+                    router.push('/pages/dashboardDoctor'); 
                     toast.success('Login realizado com sucesso!');
                 } else {
                     toast.error('Número CRM inválido');
                 }
             } else {
-                const errorData = await response.json();
-                console.log('Erro da API:', errorData);
-                toast.error('Número CRM inválido');
+                toast.error('Erro ao realizar login');
             }
         } catch (error) {
-            console.error('Erro ao fazer login:', error);
-            toast.error('Erro ao fazer login');
+            console.error('Erro ao realizar login:', error);
+            toast.error('Erro ao realizar login');
         }
     };
 

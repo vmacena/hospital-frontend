@@ -33,6 +33,7 @@ export default function PatientDashboard() {
   const [exams, setExams] = useState<Exam[]>([]);
   const [isAnimatingOut, setIsAnimatingOut] = useState(false); // Controle de animação de saída
   const [loading, setLoading] = useState(true);
+  const [profilePictureUrl, setProfilePictureUrl] = useState<string | null>(null); // Estado para armazenar a URL da foto de perfil
 
   useEffect(() => {
     const fetchAppointmentsAndExams = async () => {
@@ -74,7 +75,15 @@ export default function PatientDashboard() {
       }
     };
 
+    const fetchProfilePicture = () => {
+      const pictureUrl = localStorage.getItem("picture_url");
+      if (pictureUrl) {
+        setProfilePictureUrl(pictureUrl);
+      }
+    };
+
     fetchAppointmentsAndExams();
+    fetchProfilePicture();
   }, []);
 
   const handleViewChange = (view: "viewAppointments" | "viewExams") => {
@@ -87,7 +96,7 @@ export default function PatientDashboard() {
 
   return (
     <div className={styles.containerCenter}>
-      <Sidebar setActiveView={handleViewChange} />
+      <Sidebar setActiveView={handleViewChange} profilePictureUrl={profilePictureUrl} />
       <div className={styles.panel}>
         <h1>Patient Dashboard</h1>
         {loading ? (
@@ -167,12 +176,19 @@ export default function PatientDashboard() {
 
 function Sidebar({
   setActiveView,
+  profilePictureUrl,
 }: {
   setActiveView: (view: "viewAppointments" | "viewExams") => void;
+  profilePictureUrl: string | null;
 }) {
   return (
     <div className={styles.sidebar}>
       <h2>Menu</h2>
+      {profilePictureUrl && (
+        <div className={styles.profilePictureContainer}>
+          <img src={profilePictureUrl} alt="Profile" className={styles.profilePicture} />
+        </div>
+      )}
       <ul>
         <li>
           <button
@@ -200,6 +216,7 @@ function Sidebar({
           href="/"
           onClick={() => {
             localStorage.removeItem("token");
+            localStorage.removeItem("picture_url"); // Remover a URL da foto de perfil ao sair
           }}
         >
           <FaSignOutAlt style={{ marginRight: "8px" }} />
