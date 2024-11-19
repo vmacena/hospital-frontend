@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import styles from '@/app/page.module.scss';
 import { useDoctorAuth } from '@/app/hooks/doctor/useDoctorAuth';
 import LoginForm from '@/app/components/LoginForm';
@@ -15,7 +15,7 @@ const DoctorPage: React.FC = () => {
 
     const handleSubmit = async (event: React.FormEvent) => {
         setIsLoading(true);
-        await handleDoctorSubmit(event, router); // Passe o router como argumento
+        await handleDoctorSubmit(event, router); 
         setIsLoading(false);
     };
 
